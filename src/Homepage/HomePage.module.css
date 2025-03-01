@@ -1,0 +1,140 @@
+:root {
+    --homePageBackground: linear-gradient(135deg, #faf5e9, #FFCC80);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.homePageWrapper {
+    width: 100vw;
+    height: 100vh;
+    background: var(--homePageBackground);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.homePageHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: linear-gradient(135deg, #FFEE58, #FFCA28);
+    text-align: center;
+    padding: 0px 0;
+    border-radius: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+.homePageHeader h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.homePageHeader p {
+    font-size: 18px;
+    color: #444;
+    margin-top: 10px;
+}
+
+.homePageNavbar {
+    width: 100%;
+    background-color: #FFB300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.homePageGridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    padding: 40px;
+    max-width: 1200px;
+    margin-top: 100px; /* ✅ แก้ไข margin-top เพื่อไม่ให้ทับ navbar */
+}
+
+.homePageSubject {
+    background: linear-gradient(135deg, #FF9800, #FF6D00);
+    color: white;
+    font-size: 28px;
+    width: 350px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.homePageSubject:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.homePageSidebar {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+}
+
+.homePageSidebarOpen {
+    right: 0;
+}
+
+.homePageSidebarButton {
+    display: block;
+    padding: 15px 15px;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #ff9800, #ff0000);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.homePageSidebarButton:hover {
+    background: linear-gradient(135deg, #ff5722, #e91e63);
+    transform: scale(1.05);
+}
+
+.homePageCloseBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 22px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+

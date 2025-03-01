@@ -1,0 +1,122 @@
+/* ✅ ตั้งค่าพื้นหลังให้เต็มจอ */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/public/Welcome.webp"); /* ✅ ใช้ CSS background แทน <img> */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ✅ ปรับ contentBox ให้แสดงผลตรงกลาง */
+.contentBox {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center; /* ✅ จัดให้อยู่ตรงกลาง */
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+    text-align: center; /* ✅ จัดให้อยู่ตรงกลาง */
+    margin-bottom: 20px;
+}
+
+/* ✅ จัดกลุ่ม title และ subtitle ให้อยู่กึ่งกลาง */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ✅ ปรับข้อความและเนื้อหา */
+.intro {
+    padding: 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.sectionTitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #444;
+}
+
+.description {
+    font-size: 16px;
+    color: #555;
+}
+
+/* ✅ ปุ่ม */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.nextButton, .loginButton {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+.nextButton:hover, .loginButton:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+    .contentBox {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .sectionTitle {
+        font-size: 20px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .nextButton, .loginButton {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

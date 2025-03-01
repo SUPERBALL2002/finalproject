@@ -1,0 +1,136 @@
+.accountSettingsHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(to right, #ff7f7f, #e67d7d);
+    color: white;
+    padding: 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.accountSettingsContainer {
+    width: 50%;
+    max-width: 600px;
+    padding: 20px;
+    background: linear-gradient(#7fb0fa,#97c3f1);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+
+.accountSettingsContainer h2 {
+    text-align: center;
+}
+
+.accountSettingsLabel {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.accountSettingsInput {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.accountSettingsSaveButton {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.accountSettingsSaveButton:hover {
+    background-color: #0056b3;
+}
+
+.accountSettingsCheckboxContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.accountSettingsCheckboxContainer input {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.accountSettingsCheckboxContainer label {
+    font-size: 16px;
+}
+
+.accountSettingsBackButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+h1 {
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* ✅ อัปโหลดรูปโปรไฟล์ */
+.accountSettingsProfileUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.accountSettingsProfileUpload img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+}
+
+.accountSettingsUploadLabel {
+    display: block;
+    background-color: #FF5722;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* ✅ ปรับแต่งฟอร์ม */
+.accountSettingsForm {
+    display: flex;
+    flex-direction: column;
+}
+.accountSettingsWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(#ccc,#007BFF);
+  }
+  

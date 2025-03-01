@@ -1,0 +1,245 @@
+/* ✅ กำหนดตัวแปรสีหลัก */
+:root {
+    --background-light: linear-gradient(135deg, #eff3e7, #bfe07d);
+    --background-dark: #222;
+    --card-light: rgba(0, 0, 0, 0.18);
+    --card-dark: #444;
+    --text-light: #333;
+    --text-dark: #fff;
+    --header-light: linear-gradient(150deg, #bfe07d, #ace23e, #bfe07d);
+    --header-dark: #333;
+    --button-light-bg: #4CAF50;
+    --button-dark-bg: #666;
+    --button-light-hover: #388E3C;
+    --button-dark-hover: #888;
+    --progress-light: #4CAF50;
+    --progress-dark: #FFEB3B;
+    --progress-bar-light: #ddd;
+    --progress-bar-dark: #555;
+}
+
+/* ✅ โหมดปกติ */
+.userProfileContainer {
+    font-family: "Poppins", sans-serif;
+    background: var(--background-light);
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ✅ โหมดมืด */
+.userDarkMode {
+    background: var(--background-dark);
+    color: var(--text-dark);
+}
+
+/* ✅ หัวข้อด้านบน */
+.userProfileHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--header-light);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.userDarkMode .userProfileHeader {
+    background: var(--header-dark);
+}
+
+/* ✅ ปุ่มย้อนกลับ */
+.userProfileBackButton {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ✅ โครงสร้างหลัก */
+.userProfileMainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+/* ✅ กล่องข้อมูล */
+.userProfileInfoCard {
+    background-color: var(--card-light);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.userDarkMode .userProfileInfoCard {
+    background-color: var(--card-dark);
+}
+
+/* ✅ แถบความคืบหน้า */
+.userProfileProgressContainer {
+    margin-top: 15px;
+}
+
+.userProfileProgressBar {
+    width: 100%;
+    background-color: var(--progress-bar-light);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 15px;
+}
+
+.userProfileProgress {
+    height: 100%;
+    width: 0%;
+    background-color: var(--progress-light);
+    transition: width 0.5s ease-in-out;
+}
+
+.userDarkMode .userProfileProgressBar {
+    background-color: var(--progress-bar-dark);
+}
+
+.userDarkMode .userProfileProgress {
+    background-color: var(--progress-dark);
+}
+
+/* ✅ ปุ่ม */
+.userProfileButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.userProfileEditButton {
+    background-color: var(--button-light-bg);
+    color: white;
+}
+
+.userProfileEditButton:hover {
+    background-color: var(--button-light-hover);
+}
+
+.userProfileViewScore {
+    background-color: #FF9800;
+    color: white;
+}
+
+.userProfileViewScore:hover {
+    background-color: #F57C00;
+}
+
+.userDarkMode .userProfileButton {
+    background-color: var(--button-dark-bg);
+}
+
+.userDarkMode .userProfileButton:hover {
+    background-color: var(--button-dark-hover);
+}
+
+/* ✅ ปุ่มสลับโหมด */
+.userProfileToggleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.userProfileToggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 35px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.userProfileToggleSwitch input {
+    display: none;
+}
+
+.userProfileSlider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+.dayMode .userProfileSlider {
+    background: #f1f1f1;
+    color: #333;
+}
+
+.nightMode .userProfileSlider {
+    background: #2c3e50;
+    color: white;
+}
+
+.userProfileSliderText {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    z-index: 2;
+}
+
+/* ✅ ปุ่มอยู่ตรงกลาง */
+.userProfileButtonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* ✅ แก้ไขปุ่มใน Dark Mode */
+.userDarkMode .userProfileEditButton {
+    background-color: var(--button-dark-bg);
+}
+
+.userDarkMode .userProfileEditButton:hover {
+    background-color: var(--button-dark-hover);
+}
+
+.userDarkMode .userProfileViewScore {
+    background-color: #FF9800;
+}
+
+.userDarkMode .userProfileViewScore:hover {
+    background-color: #F57C00;
+}
