@@ -1,0 +1,94 @@
+/* ✅ ตั้งค่าหน้าจอเกม */
+.numberSortGameBackground{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #87CEFA, #4682B4);
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.numberSortGameContainer {
+    text-align: center;
+    background-color: #fffbcc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    margin: 20px auto;
+  }
+  
+  /* ✅ หัวข้อเกม */
+  .numberSortGameTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* ✅ กล่องปุ่มตัวเลข */
+  .numberSortGameNumberList {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  /* ✅ ปุ่มตัวเลข */
+  .numberSortGameButton {
+    background-color: #ff9800;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .numberSortGameButton:hover {
+    background-color: #e68900;
+  }
+  
+  /* ✅ ปุ่มตรวจสอบ */
+  .numberSortGameCheckButton {
+    background-color: #4caf50;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-right: 10px;
+    transition: 0.3s;
+  }
+  
+  .numberSortGameCheckButton:hover {
+    background-color: #3d8b40;
+  }
+  
+  /* ✅ ปุ่มสับเปลี่ยนตัวเลข */
+  .numberSortGameShuffleButton {
+    background-color: #2196f3;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+  }
+  
+  .numberSortGameShuffleButton:hover {
+    background-color: #1976d2;
+  }
+  
+  /* ✅ ข้อความผลลัพธ์ */
+  .numberSortGameMessage {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+  }

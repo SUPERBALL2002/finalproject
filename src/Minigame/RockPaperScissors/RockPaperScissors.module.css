@@ -1,0 +1,128 @@
+/* ✅ ตั้งค่าพื้นหลัง */
+.rockPaperScissorsBackground {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #c7deec, #4682B4);
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.rockPaperScissorsContainer {
+    text-align: center;
+    background-color: #fffbcc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.rockPaperScissorsContainer h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.rockPaperScissorsChoices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.rockPaperScissorsChoiceButton {
+    background-color: #ff9800;
+    border: none;
+    padding: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rockPaperScissorsChoiceButton:hover {
+    background-color: #e68900;
+    transform: scale(1.1);
+}
+
+.rockPaperScissorsResultBox {
+    padding: 15px;
+    background: linear-gradient(#cfe0eb , #4682B4);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+    max-width: 90%;
+    margin-top: 10px;
+}
+
+.rockPaperScissorsResultBox h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.rockPaperScissorsScoreBox {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #4caf50;
+    color: white;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+@keyframes shakeHand {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-15deg); }
+    40% { transform: rotate(15deg); }
+    60% { transform: rotate(-15deg); }
+    80% { transform: rotate(15deg); }
+}
+
+.rockPaperScissorsHand {
+    font-size: 50px;
+    display: inline-block;
+    animation: shakeHand 0.6s ease-in-out;
+}
+
+.rockPaperScissorsResetButton {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #f44336;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.rockPaperScissorsResetButton:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
+}

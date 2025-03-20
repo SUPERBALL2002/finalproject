@@ -1,0 +1,124 @@
+/* ✅ ตั้งค่าสีพื้นหลังของเกม */
+.memoryGameBackground {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #87CEFA, #4682B4);
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ✅ กล่องของเกม */
+.memoryGameContainer {
+    max-width: 500px;
+    padding: 20px;
+    background-color: #fffbcc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ ตารางการ์ด */
+.memoryGameGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* ✅ การ์ด */
+.memoryGameCard {
+    width: 80px;
+    height: 80px;
+    font-size: 24px;
+    background: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s ease;
+}
+
+/* ✅ เอฟเฟกต์ตอนคลิกการ์ด */
+.memoryGameCard:hover {
+    transform: scale(1.1);
+}
+
+/* ✅ การ์ดที่พลิกแล้ว */
+.memoryGameCard.flipped {
+    background: #FFD700;
+    font-size: 28px;
+}
+
+/* ✅ การ์ดที่จับคู่สำเร็จ (หายไป) */
+.memoryGameCard.matched {
+    visibility: hidden;
+}
+
+/* ✅ ปุ่มเล่นใหม่ */
+.memoryGameResetButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #FF4500;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.memoryGameResetButton:hover {
+    background: #E63900;
+}
+
+/* ✅ Pop-up เมื่อชนะเกม */
+.memoryGamePopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.memoryGamePopupContent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.memoryGamePopupButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.memoryGamePopupButton:hover {
+    background: #388E3C;
+}
+/* ✅ เอฟเฟกต์การ์ดที่จับคู่ถูกต้องแล้วหายไป */
+.fadeOut {
+    animation: fadeOut 1s forwards; /* ทำให้การ์ดค่อยๆ หายไป */
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}

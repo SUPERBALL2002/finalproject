@@ -5,6 +5,7 @@ import styles from "./HomePage.module.css";
 const HomePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSubject, setActiveSubject] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // state สำหรับ popup
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -13,11 +14,31 @@ const HomePage = () => {
 
   const handleSubjectClick = (subject) => {
     setActiveSubject(subject);
+    if (subject === "คณิตศาสตร์") {
+      navigate("/math");
+    } else if (subject === "วิทยาศาสตร์") {
+      navigate("/science");
+    }
+    else if (subject === "ภาษาไทย"){
+      navigate("/thailanguage")
+    }
+    else if (subject === "ภาษาอังกฤษ"){
+      navigate("/englanguage")
+    }
+
+  };
+
+  const handleLogoutClick = () => {
+    setShowPopup(true); // แสดง popup เมื่อคลิกออกจากระบบ
   };
 
   const handleLogout = () => {
     localStorage.removeItem("userToken");
     navigate("/login");
+  };
+
+  const cancelLogout = () => {
+    setShowPopup(false); // ซ่อน popup
   };
 
   return (
@@ -43,8 +64,9 @@ const HomePage = () => {
         <button className={styles.homePageCloseBtn} onClick={toggleSidebar}>✖</button>
         <ul>
           <li><Link to="/profile" className={`${styles.homePageSidebarButton}`}>โปรไฟล์</Link></li>
-          <li><Link to="/settings" className={`${styles.homePageSidebarButton}`}>ตั้งค่า</Link></li>
-          <li><button onClick={handleLogout} className={`${styles.homePageSidebarButton}`}>ออกจากระบบ</button></li>
+          <li><Link to="/account-settings" className={`${styles.homePageSidebarButton}`}>ตั้งค่าบัญชี</Link></li>
+          <li><Link to="/minigame" className={`${styles.homePageSidebarButton}`}>เกมส์</Link></li>
+          <li><button onClick={handleLogoutClick} className={`${styles.homePageSidebarButton}`}>ออกจากระบบ</button></li>
         </ul>
       </div>
 
@@ -60,6 +82,19 @@ const HomePage = () => {
           </button>
         ))}
       </div>
+
+      {/* ✅ Popup ออกจากระบบ */}
+      {showPopup && (
+        <div className={styles.homePagePopupBackground}>
+          <div className={styles.homePagePopupContainer}>
+            <p>คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?</p>
+            <div className={styles.homePagePopupButtons}>
+              <button onClick={handleLogout} className={styles.homePagePopupConfirmButton}>ตกลง</button>
+              <button onClick={cancelLogout} className={styles.homePagePopupCancelButton}>ยกเลิก</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

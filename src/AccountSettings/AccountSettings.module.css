@@ -15,11 +15,12 @@
 
 .accountSettingsContainer {
     width: 50%;
-    max-width: 600px;
-    padding: 20px;
+    max-width: 500px;
+    padding: 30px;
     background: linear-gradient(#7fb0fa,#97c3f1);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
   }
   
 

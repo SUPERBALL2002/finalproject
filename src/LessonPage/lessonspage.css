@@ -1,0 +1,112 @@
+.lesson-container {
+    width: 100vw; 
+    min-height: 100vh;  /* ใช้ min-height แทน height เพื่อรองรับเนื้อหาที่ยาว */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3b82f6;
+    color: white;
+    padding: 15px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+/* บทเรียน */
+.lesson-title {
+    background-color: #2563eb;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.lesson-subitems {
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid #60a5fa;
+}
+
+.lesson-subitem {
+    background-color: #dbeafe;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.lesson-subitem:hover {
+    background-color: #bfdbfe;
+}
+
+.lesson-subitem .score {
+    float: right;
+    font-size: 12px;
+    color: #333;
+}
+
+.lesson-title:hover {
+    background-color: #1e40af;
+}
+
+/* กล่องเนื้อหา */
+.lesson-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+/* รายการเนื้อหา */
+.lesson-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 5px 0;
+    background-color: #e0f2fe;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.lesson-item:hover {
+    background-color: #90cdf4;
+}
+
+.lesson-item.active {
+    background-color: #60a5fa;
+    color: white;
+}
+
+/* แสดงรายละเอียดเนื้อหา */
+.lesson-detail {
+    background-color: #f1f5f9;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ทำให้เนื้อหาค่อยๆ ปรากฏขึ้น */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
