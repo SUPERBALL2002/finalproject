@@ -9,11 +9,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // ตัวอย่างข้อมูลบัญชีผู้ใช้
+
     const mockUser = { username: "testuser", password: "123456" };
 
     if (username === mockUser.username && password === mockUser.password) {
-      navigate("/homepage"); // เปลี่ยนเส้นทางไปยังหน้าหลักหลังล็อกอินสำเร็จ
+      navigate("/homepage"); 
     } else {
       setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
     }
