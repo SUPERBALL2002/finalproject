@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { mockUsers } from "../mockData_user"; // Import the updated mock users
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -9,10 +10,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // ตัวอย่างข้อมูลบัญชีผู้ใช้
-    const mockUser = { username: "testuser", password: "123456" };
+    const user = mockUsers.find(
+      (u) => u.username === username && u.password === password
+    );
 
-    if (username === mockUser.username && password === mockUser.password) {
+    if (user) {
       navigate("/homepage"); // เปลี่ยนเส้นทางไปยังหน้าหลักหลังล็อกอินสำเร็จ
     } else {
       setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
@@ -39,7 +41,7 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className={`${styles.error} ${styles.errorRed}`}>{error}</p>}
         
         <Link to="/forgotpassword" className={styles.forgotPassword}>
           Forgot password

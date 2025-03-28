@@ -80,6 +80,7 @@
     text-align: left;
     animation: slideIn 0.5s ease-out; /* เพิ่มการเคลื่อนที่จากขวา */
     border: 2px solid #000;
+    font-family: "Prompt", sans-serif !important;
   }
   
   /* ✅ แถบความคืบหน้า */
