@@ -33,10 +33,10 @@ const AccountSettings = () => {
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+      const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
 
       if (!validImageTypes.includes(file.type)) {
-        alert("กรุณาอัปโหลดเฉพาะไฟล์รูปภาพ (JPG, PNG, GIF)");
+        alert("กรุณาอัปโหลดเฉพาะไฟล์รูปภาพ (JPG, PNG, GIF ,WEBP)");
         return;
       }
 

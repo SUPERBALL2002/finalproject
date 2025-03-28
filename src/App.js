@@ -5,6 +5,7 @@ import LoginPage from "./LoginPage/LoginPage";
 import Register from "./Register/Register";
 import ForgotPassword from "./Forgotpassword/Forgotpassword";
 import Homepage from "./Homepage/HomePage";
+import About from "./About/About";
 import Profile from "./Profile/Profile";
 import AccountSettings from "./AccountSettings/AccountSettings";
 import Score from "./Score/Score";
@@ -32,6 +33,7 @@ function App() {
         <Route path="register" element = {<Register />} />
         <Route path="forgotpassword" element ={<ForgotPassword />} />
         <Route path="homepage" element = {<Homepage />} />
+        <Route path="about" element = {<About />} />
         <Route path="profile" element = {<Profile />} />
         <Route path="account-settings" element = {<AccountSettings />} />
         <Route path="score" element = {<Score />} />

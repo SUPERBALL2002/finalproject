@@ -1,5 +1,5 @@
 :root {
-    --homePageBackground: linear-gradient(135deg, #faf5e9, #FFCC80);
+    --homePageBackground:linear-gradient(135deg, #96dffc, #ffffff);
 }
 
 * {
@@ -23,7 +23,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    background: linear-gradient(135deg, #FFEE58, #FFCA28);
+    background: linear-gradient(135deg, #0099ff, #ffffff);
     text-align: center;
     padding: 0px 0;
     border-radius: 0;
@@ -50,7 +50,7 @@
 
 .homePageNavbar {
     width: 100%;
-    background-color: #FFB300;
+    background-color: #3d7ef7;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,7 +70,7 @@
 }
 
 .homePageSubject {
-    background: linear-gradient(135deg, #FF9800, #FF6D00);
+    background-color: #1ea2df;
     color: white;
     font-size: 28px;
     width: 350px;
@@ -130,7 +130,8 @@
     display: block;
     padding: 15px 15px;
     margin: 20px 0;
-    background: linear-gradient(135deg, #ff9800, #ff0000);
+    margin-top: 50px;
+    background: linear-gradient(135deg, #0099ff, #00bfff); /* เปลี่ยนสี gradient ให้เข้ากับสีหน้าหลัก */
     color: white;
     font-weight: bold;
     text-align: center;
@@ -140,8 +141,13 @@
 }
 
 .homePageSidebarButton:hover {
-    background: linear-gradient(135deg, #ff5722, #e91e63);
+    background: linear-gradient(135deg, #00bfff, #1ea2df); /* สร้างการเปลี่ยนแปลงของ gradient */
     transform: scale(1.05);
+}
+
+.homePageSidebarButton:active {
+    background: linear-gradient(135deg, #007acc, #0099ff); /* กดแล้วเป็น gradient ที่เข้มขึ้น */
+    transform: scale(0.98);
 }
 
 .homePageCloseBtn {

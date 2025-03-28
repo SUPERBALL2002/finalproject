@@ -7,7 +7,7 @@ const MiniGameSelection = () => {
 
   return (
     <div className={styles.miniGameContainer}>
-      <h1 className={styles.miniGametitle}>🎮 เลือเกมที่คุณต้องการเล่น 🎮</h1>
+      <h1 className={styles.miniGametitle}>🎮 เลือกเกมที่คุณต้องการเล่น 🎮</h1>
       <div className={styles.miniGameGrid}> 
         <button className={styles.gameButton} onClick={() => navigate("/memorygame")}>
           🃏 เกมจับคู่การ์ด
