@@ -83,11 +83,9 @@ const UserProfile = () => {
 
         <div className={styles.userProfileStatsCard}>
           <h3>🏆 สถิติการเล่น</h3>
-          <p><strong>🎮 เกมที่เล่น:</strong> 50</p>
-          <p><strong>🏅 คะแนนสูงสุด:</strong> 9800</p>
-          <p><strong>🥇 ชนะ:</strong> 25 ครั้ง</p>
+          <p><strong>🎮 จำนวนเกมที่เล่นในแต่ละครั้ง:</strong> 50</p>
           <div className={styles.userProfileChart}>
-            <h3>📊 ความสำเร็จในแต่ละวิชา</h3>
+            <h3>📊 คะแนนรวมทั้งหมดในแต่ละวิชา</h3>
             <div className={styles.userProfileSubjectProgressRow}>
               {Object.entries(subjectProgress).map(([subject, percentage]) => (
                 <div key={subject} className={styles.userProfileSubjectProgressItem}>

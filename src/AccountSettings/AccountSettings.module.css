@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background: linear-gradient(to right, #ff7f7f, #e67d7d);
+    background: linear-gradient(to right, #7db4f3, #0074f8);
     color: white;
     padding: 10px 0;
     font-size: 20px;
@@ -16,12 +16,15 @@
 .accountSettingsContainer {
     width: 50%;
     max-width: 500px;
-    padding: 30px;
-    background: linear-gradient(#7fb0fa,#97c3f1);
+    padding: 10px;
+    background: linear-gradient(#7fb0fa, #97c3f1);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 40px;
-  }
+    min-height: 300px; /* เพิ่มความสูงขั้นต่ำ */
+    overflow-y: auto; /* กำหนดการเลื่อนแนวตั้งถ้าหากเนื้อหามีมาก */
+}
+
   
 
 .accountSettingsContainer h2 {
@@ -110,7 +113,7 @@ h1 {
 
 .accountSettingsUploadLabel {
     display: block;
-    background-color: #FF5722;
+    background-color: #e94310;
     color: white;
     padding: 8px;
     border-radius: 5px;

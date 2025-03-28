@@ -3,14 +3,14 @@
     min-height: 100vh;  /* ใช้ min-height แทน height เพื่อรองรับเนื้อหาที่ยาว */
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background: linear-gradient(#e0f0ff, #3b9cf6);
 }
 
 .lesson-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3b82f6;
+    background-color: #0082fc;
     color: white;
     padding: 15px;
     font-size: 1.5rem;
@@ -19,7 +19,7 @@
 
 /* บทเรียน */
 .lesson-title {
-    background-color: #2563eb;
+    background-color: #2265f7;
     color: white;
     padding: 15px;
     font-weight: bold;
