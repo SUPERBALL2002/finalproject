@@ -111,7 +111,7 @@ const UserProfile = () => {
         <div className={styles.userProfileSettingsCard}>
           <Link to="/account-settings">
             <button className={`${styles.userProfileButton} ${styles.userProfileEditButton}`}>
-              ⚙️ ตั้งค่าบัญชี
+              ⚙️ แก้ไขข้อมูส่วนตัว
             </button>
           </Link>
           <Link to="/score">
