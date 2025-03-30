@@ -96,17 +96,17 @@
 }
 
 @keyframes shakeHand {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-15deg); }
-    40% { transform: rotate(15deg); }
-    60% { transform: rotate(-15deg); }
-    80% { transform: rotate(15deg); }
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-20deg) scale(1.1); }
+    40% { transform: rotate(20deg) scale(1.1); }
+    60% { transform: rotate(-20deg) scale(1.1); }
+    80% { transform: rotate(20deg) scale(1.1); }
 }
 
 .rockPaperScissorsHand {
     font-size: 50px;
     display: inline-block;
-    animation: shakeHand 0.6s ease-in-out;
+    animation: shakeHand 0.8s ease-in-out infinite;
 }
 
 .rockPaperScissorsResetButton {

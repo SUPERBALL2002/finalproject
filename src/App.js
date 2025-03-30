@@ -12,8 +12,6 @@ import ResetPassword from "./Resetpassword/Resetpassword";
 import MiniGameSelection from "./Minigame/Minigame";
 import MemoryGame from "../src/Minigame/MemoryGame/MemoryGame";
 import NumberSortGame from "./Minigame/NumberSortGame/NumberSortGame";
-import WordMatchingGame from "./Minigame/WordMatchingGame/WordMatchingGame";
-import WordCompletionGame from "./Minigame/WordCompletionGame/WordCompletionGame";
 import RockPaperScissors from "./Minigame/RockPaperScissors/RockPaperScissors";
 import MathPage from "./LessonPage/Mathpage";
 import SciPage from "./LessonPage/Science";
@@ -39,8 +37,6 @@ function App() {
         <Route path="minigame" element = {<MiniGameSelection />} />
         <Route path="memorygame" element = {<MemoryGame />} />
         <Route path="numbersortgame" element = {<NumberSortGame />} />
-        <Route path="wordmatchinggame" element ={<WordMatchingGame />} />
-        <Route path="wordcompletiongame" element ={<WordCompletionGame />} />
         <Route path="rockpaperscissors" element = {<RockPaperScissors />} />
         <Route path="math" element = {<MathPage />} />
         <Route path="science" element = {<SciPage/>} />

@@ -96,7 +96,8 @@
     margin-top: 10px;
     border-radius: 4px;
     font-size: 16px;
-    animation: fadeIn 0.3s ease-in-out;
+    animation: slideDown 0.5s ease-out;
+    transform-origin: top;
 }
 
 /* ทำให้เนื้อหาค่อยๆ ปรากฏขึ้น */
@@ -111,16 +112,16 @@
     }
 }
 @keyframes slideDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  .slide-down {
-    animation: slideDown 1.0s ease-out;
-  }
+}
+
+.slide-down {
+    animation: slideDown 0.5s ease-out;
+}

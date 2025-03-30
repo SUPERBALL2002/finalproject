@@ -18,7 +18,10 @@ const RockPaperScissors = () => {
   const [animating, setAnimating] = useState(false);
 
   const determineWinner = (player, computer) => {
-    if (player === computer) return "🔄 เสมอ";
+    if (player === computer) {
+      setScore((prev) => ({ ...prev, draw: prev.draw + 1 }));
+      return "🔄 เสมอ";
+    }
     if (
       (player === "rock" && computer === "scissors") ||
       (player === "scissors" && computer === "paper") ||
@@ -78,8 +81,8 @@ const RockPaperScissors = () => {
             </div>
         </div>       
       <div className={styles.rockPaperScissorsResultBox}>
-        <p>👤 คุณเลือก: <span className={animating ? styles.rockPaperScissorsHand : ""}>{playerChoice ? choices.find(c => c.name === playerChoice).emoji : "❓"}</span></p>
-        <p>🤖 คอมพิวเตอร์: <span className={animating ? styles.rockPaperScissorsHand : ""}>{computerChoice ? computerChoice.emoji : "❓"}</span></p>
+        <p>👤 คุณเลือก: <span className={animating ? styles.rockPaperScissorsHand : ""}>{animating ? "✊" : (playerChoice ? choices.find(c => c.name === playerChoice).emoji : "❓")}</span></p>
+        <p>🤖 คอมพิวเตอร์: <span className={animating ? styles.rockPaperScissorsHand : ""}>{animating ? "✊" : (computerChoice ? computerChoice.emoji : "❓")}</span></p>
         <h3>{result}</h3>
       </div>
 
