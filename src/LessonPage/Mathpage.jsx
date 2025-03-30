@@ -42,7 +42,7 @@ const MathPage = () => {
             {lesson.title}
           </div>
           {selectedLesson === lessonIndex && (
-            <div className="lesson-items">
+            <div className="lesson-items slide-down">
               {lesson.contents.map((content, contentIndex) => {
                 const key = `${lessonIndex}-${contentIndex}`;
                 return (

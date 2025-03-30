@@ -7,12 +7,15 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  
 
   const handleLogin = () => {
 
     const mockUser = { username: "testuser", password: "123456" };
+    localStorage.setItem("userToken", "true");
 
     if (username === mockUser.username && password === mockUser.password) {
+      localStorage.setItem("userToken", "true");
       navigate("/homepage"); 
     } else {
       setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");

@@ -1,8 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import styles from "./Welcomepage.module.css";
 
 const Welcompage = () => {
+  const navigate = useNavigate();
+
+  const handleNextClick = () => {
+    // ตั้งค่าว่า "ยังไม่เข้าสู่ระบบ" ลงใน localStorage
+    localStorage.setItem("isLoggedIn", "false");
+    navigate("/homepage");
+  };
   return (
     <div className={styles.background}>
       <div className={styles.contentBox}>
