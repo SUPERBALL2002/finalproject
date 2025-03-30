@@ -48,7 +48,6 @@ const HomePage = () => {
         <p>เรียนง่าย สนุก ได้ความรู้ พร้อมกิจกรรมที่ทำให้เด็ก ๆ เพลิดเพลิน</p>
         <nav className={styles.homePageNavbar}>
           <div className={styles.navLeft}>
-            <Link to="/about" className={styles.navLink}>ℹ️ เกี่ยวกับเรา</Link>
           </div>
           <div className={styles.navRight}>
             <div className={styles.profileSection} onClick={toggleSidebar}>
@@ -95,6 +94,28 @@ const HomePage = () => {
           </div>
         </div>
       )}
+            <footer className={styles.homePageFooter}>
+  <h2>เกี่ยวกับโครงการ</h2>
+  <p>
+    โครงการนี้พัฒนาขึ้นเพื่อส่งเสริมการเรียนรู้ของเด็ก ๆ ผ่านแบบฝึกหัดที่กระตุ้นการคิดวิเคราะห์
+    โดยเน้นความสนุกสนานและการมีส่วนร่วมของเด็ก รวมถึงสนับสนุนผู้ปกครองและครูผู้สอนด้วยเครื่องมือที่ใช้งานง่าย
+  </p>
+
+  <h3>เป้าหมายของเรา</h3>
+  <ul>
+    <li>ส่งเสริมการคิดวิเคราะห์ผ่านคำถามที่หลากหลาย</li>
+    <li>กระตุ้นความสนใจในการเรียนรู้ของเด็ก</li>
+    <li>สร้างแพลตฟอร์มที่เข้าถึงง่าย</li>
+    <li>พัฒนาแบบฝึกหัดให้เหมาะกับช่วงวัย</li>
+  </ul>
+
+  <h3>ติดต่อเรา</h3>
+  <p>
+    อีเมล: <a href="mailto:karan@gmail.com">karan@gmail.com</a> <br />
+    โทร: <a href="tel:+66971234567">+66 9712 34567</a>
+  </p>
+</footer>
+
     </div>
   );
 };
