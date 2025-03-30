@@ -245,13 +245,18 @@ const ScienceQuiz = () => {
             </div>
 
             <div className="buttons">
-                <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
-                {currentQuestionIndex < shuffledQuestions.length - 1 ? (
-                    <button onClick={handleNext}>ถัดไป</button>
-                ) : (
-                    <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
-                )}
-            </div>
+    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
+    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
+        <button
+            onClick={handleNext}
+            disabled={answers[currentQuestionIndex] === null} 
+        >
+            ถัดไป
+        </button>
+    ) : (
+        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
+    )}
+</div>
 
             {score !== null && (
                 <div className="result">

@@ -245,13 +245,18 @@ const EngQuiz = () => {
 
             {/* ปุ่มควบคุม */}
             <div className="buttons">
-                <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
-                {currentQuestionIndex < shuffledQuestions.length - 1 ? (
-                    <button onClick={handleNext}>ถัดไป</button>
-                ) : (
-                    <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
-                )}
-            </div>
+    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
+    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
+        <button
+            onClick={handleNext}
+            disabled={answers[currentQuestionIndex] === null} // ✅ ป้องกันไม่ให้ไปต่อถ้ายังไม่ตอบ
+        >
+            ถัดไป
+        </button>
+    ) : (
+        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
+    )}
+</div>
 
             {/* แสดงคะแนนเมื่อทำครบทุกข้อ */}
             {score !== null && (
