@@ -45,9 +45,16 @@ const AccountSettings = () => {
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = (e) => setProfileImage(e.target.result);
-      reader.readAsDataURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const reader = new FileReader();
+        reader.onload = (e) => setProfileImage(e.target.result);
+        reader.readAsDataURL(file);
+      };
+      img.onerror = () => {
+        alert("ไฟล์ที่อัปโหลดไม่ใช่รูปภาพที่ถูกต้อง");
+      };
+      img.src = URL.createObjectURL(file);
     }
   };
 
@@ -117,7 +124,15 @@ const AccountSettings = () => {
 
         <form className={styles.accountSettingsForm} onSubmit={handleSubmit}>
           <label className={styles.accountSettingsLabel}>👤 ชื่อผู้ใช้ใหม่</label>
-          <input className={styles.accountSettingsInput} type="text" name="username" value={formData.username} onChange={handleChange} placeholder="กรอกชื่อใหม่" />
+          <input
+            className={styles.accountSettingsInput}
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="กรอกชื่อใหม่"
+            aria-label="ชื่อผู้ใช้ใหม่"
+          />
           {errors.username && <span className={styles.errorText}>{errors.username}</span>}
 
           <label className={styles.accountSettingsLabel}>📧 อีเมลใหม่</label>
