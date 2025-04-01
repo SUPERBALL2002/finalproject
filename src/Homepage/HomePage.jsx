@@ -43,7 +43,7 @@ const HomePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userToken");
-    navigate("/login");
+    navigate("/homepage");
   };
 
   const cancelLogout = () => {

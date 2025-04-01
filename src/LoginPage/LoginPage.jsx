@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -7,20 +7,26 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
 
   const handleLogin = () => {
-
     const mockUser = { username: "testuser", password: "123456" };
-    localStorage.setItem("userToken", "true");
 
     if (username === mockUser.username && password === mockUser.password) {
-      localStorage.setItem("userToken", "true");
+      // ตั้งค่า userToken เป็น "loggedIn"
+      localStorage.setItem("userToken", "loggedIn");
       navigate("/homepage"); 
     } else {
       setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
     }
   };
+
+  // ตรวจสอบสถานะการเข้าสู่ระบบเมื่อโหลดหน้า
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+    if (userToken === "loggedIn") {
+      navigate("/homepage"); // หากเข้าสู่ระบบแล้ว ให้นำทางไปยังหน้า homepage
+    }
+  }, [navigate]);
 
   return (
     <div className={styles.LoginPage}>
