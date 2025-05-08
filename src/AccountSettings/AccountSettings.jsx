@@ -7,7 +7,8 @@ const AccountSettings = () => {
   const [profileImage, setProfileImage] = useState("/default-avatar.png");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  
+  const [showPopup, setShowPopup] = useState(false); // ✅ State สำหรับควบคุม Popup
+
   const [formData, setFormData] = useState(() => {
     // โหลดข้อมูลจาก Local Storage ถ้ามี
     const savedData = localStorage.getItem("accountSettings");
@@ -97,10 +98,14 @@ const AccountSettings = () => {
 
     setLoading(true);
     setTimeout(() => {
-      alert("✅ บันทึกการเปลี่ยนแปลงสำเร็จ!");
       setLoading(false);
+      setShowPopup(true); // ✅ แสดง Popup หลังบันทึกสำเร็จ
       localStorage.removeItem("accountSettings"); // ล้าง Local Storage หลังบันทึก
     }, 2000);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false); // ✅ ปิด Popup
   };
 
   return (
@@ -164,6 +169,18 @@ const AccountSettings = () => {
           </button>
         </form>
       </div>
+
+      {/* ✅ Popup แจ้งเตือน */}
+      {showPopup && (
+        <div className={styles.popupBackground}>
+          <div className={styles.popupContainer}>
+            <p>✅ ข้อมูลได้รับการแก้ไขแล้ว</p>
+            <button onClick={closePopup} className={styles.popupButton}>
+              ตกลง
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

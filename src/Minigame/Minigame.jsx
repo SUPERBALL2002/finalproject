@@ -16,7 +16,10 @@ const MiniGameSelection = () => {
           🔢 เกมเรียงลำดับตัวเลข 
         </button>
         <button className={styles.gameButton} onClick={() => navigate("/rockpaperscissors")}>
-        ✊ ✌️ ✋ เกมเป่ายิ้งฉุบ
+          ✊ ✌️ ✋ เกมเป่ายิ้งฉุบ
+        </button>
+        <button className={styles.gameButton} onClick={() => navigate("/numbertarget")}>
+          🎯 เกม Number Target
         </button>
       </div>
     </div>

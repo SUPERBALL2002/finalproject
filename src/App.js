@@ -13,6 +13,7 @@ import MiniGameSelection from "./Minigame/Minigame";
 import MemoryGame from "../src/Minigame/MemoryGame/MemoryGame";
 import NumberSortGame from "./Minigame/NumberSortGame/NumberSortGame";
 import RockPaperScissors from "./Minigame/RockPaperScissors/RockPaperScissors";
+import NumberTarget from "./Minigame/NumberTarget/NumberTarget";
 import MathPage from "./LessonPage/Mathpage";
 import SciPage from "./LessonPage/Science";
 import EnglanguagePage from "./LessonPage/EngLanguage";
@@ -38,6 +39,7 @@ function App() {
         <Route path="memorygame" element = {<MemoryGame />} />
         <Route path="numbersortgame" element = {<NumberSortGame />} />
         <Route path="rockpaperscissors" element = {<RockPaperScissors />} />
+        <Route path="numbertarget" element = {<NumberTarget />} />
         <Route path="math" element = {<MathPage />} />
         <Route path="science" element = {<SciPage/>} />
         <Route path="thailanguage" element = {<ThlanguagePage />} />

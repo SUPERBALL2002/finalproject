@@ -1,0 +1,153 @@
+.gameContainer {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.numbersContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.numberButton {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.numberButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background-color: #218838;
+}
+
+.operationContainer {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.operationContainer select {
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.numberTargetContainer {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffcccb, #add8e6); /* สีชมพูอ่อนและฟ้าอ่อน */
+  min-height: 100vh; /* ให้เต็มหน้าจอ */
+}
+
+.numberTargetOperationContainer {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.numberTargetOperationContainer select {
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.numberTargetNumbersContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.numberTargetButton {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #ffeb3b; /* สีเหลืองสดใส */
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.numberTargetButton:hover {
+  background-color: #fdd835; /* สีเหลืองเข้มขึ้นเมื่อ hover */
+  transform: scale(1.1); /* ขยายเล็กน้อยเมื่อ hover */
+}
+
+.numberTargetButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.numberTargetResultContainer {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.numberTargetResetButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50; /* สีเขียวสดใส */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.numberTargetResetButton:hover {
+  background-color: #388e3c; /* สีเขียวเข้มขึ้นเมื่อ hover */
+  transform: scale(1.1); /* ขยายเล็กน้อยเมื่อ hover */
+}
+
+.answerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  font-size: 24px;
+}
+
+.answerBox {
+  width: 60px;
+  height: 60px;
+  border: 3px solid #007bff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 10px;
+  background-color: #ffffff;
+  color: #000;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.operator {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 10px;
+  color: #000;
+}
