@@ -12,12 +12,12 @@ const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
-    if (token && token !== "false") {
-      setIsLoggedIn(true);
+    if (!token || token === "false") {
+      navigate("/login");
     } else {
-      setIsLoggedIn(false);
+      setIsLoggedIn(true);
     }
-  }, []);
+  }, [navigate]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -43,7 +43,7 @@ const HomePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userToken");
-    navigate("/homepage");
+    navigate("/login");
   };
 
   const cancelLogout = () => {

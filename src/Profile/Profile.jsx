@@ -15,6 +15,7 @@ const UserProfile = () => {
   };
 
   const confirmLogout = () => {
+    localStorage.removeItem("userToken");
     setShowPopup(false);
     navigate("/login");
   };
@@ -43,7 +44,7 @@ const UserProfile = () => {
   useEffect(() => {
     const calculateProgress = () => {
       let completedFields = 5;
-      let totalFields = 6;
+      let totalFields = 5;
       setProgress((completedFields / totalFields) * 100);
     };
     calculateProgress();
@@ -112,11 +113,6 @@ const UserProfile = () => {
           <Link to="/account-settings">
             <button className={`${styles.userProfileButton} ${styles.userProfileEditButton}`}>
               ⚙️ แก้ไขข้อมูส่วนตัว
-            </button>
-          </Link>
-          <Link to="/score">
-            <button className={`${styles.userProfileButton} ${styles.userProfileViewScore}`}>
-              🌟 คะแนนของฉัน
             </button>
           </Link>
           <button className={styles.userProfileLogoutButton} onClick={handleLogout}>

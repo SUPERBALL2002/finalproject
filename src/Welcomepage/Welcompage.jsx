@@ -5,11 +5,6 @@ import styles from "./Welcomepage.module.css";
 const Welcompage = () => {
   const navigate = useNavigate();
 
-  const handleNextClick = () => {
-    // ตั้งค่าว่า "ยังไม่เข้าสู่ระบบ" ลงใน localStorage
-    localStorage.setItem("isLoggedIn", "false");
-    navigate("/homepage");
-  };
   return (
     <div className={styles.background}>
       <div className={styles.contentBox}>
@@ -38,9 +33,6 @@ const Welcompage = () => {
         </section>
 
         <div className={styles.buttons}>
-          <Link to="/homepage">
-            <button className={styles.nextButton}>ไปยังหน้าต่อไป</button>
-          </Link>
           <Link to="/login">
             <button className={styles.loginButton}>ไปยังหน้าเข้าสู่ระบบ</button>
           </Link>

@@ -83,7 +83,7 @@ const AccountSettings = () => {
     if (!formData.username.trim()) newErrors.username = "⚠️ กรุณากรอกชื่อผู้ใช้";
     if (!formData.email.includes("@")) newErrors.email = "⚠️ อีเมลไม่ถูกต้อง";
     if (formData.phone.length !== 10) newErrors.phone = "⚠️ เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก";
-    if (formData.password.length < 6) newErrors.password = "⚠️ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร";
+    if (formData.password && formData.password.length < 6) newErrors.password = "⚠️ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร";
     if (formData.birthdate && new Date(formData.birthdate) > new Date())
       newErrors.birthdate = "⚠️ วันเกิดต้องไม่เป็นอนาคต";
 
