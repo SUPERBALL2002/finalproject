@@ -1,0 +1,216 @@
+/* Minimal Modern EngQuiz Layout - ใช้ชื่อ class แบบ camelCase และ prefix engQuiz สำหรับ CSS Module */
+
+.engQuizLayout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  /* สีพื้นหลังแนวภาษาอังกฤษ: ฟ้า-กรม-แดง-ขาว (inspired by UK/US flag) */
+  background: linear-gradient(120deg, #e3f0ff 0%, #b3c6f7 50%, #f7eaea 100%);
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+.engQuizIllustration {
+  width: 40%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  box-shadow: 2px 0 24px 0 rgba(60,60,60,0.06);
+  z-index: 1;
+}
+
+.engQuizIllustration img {
+  width: 80%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.08);
+  background: #f8fafb;
+  padding: 12px;
+  transition: transform 0.2s;
+}
+.engQuizIllustration img:hover {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow: 0 16px 40px 0 rgba(44, 62, 80, 0.13);
+}
+
+.engQuizMain {
+  width: 60%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: none;
+}
+
+.engQuizMain h2 {
+  font-size: 2rem;
+  color: #2563eb;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+}
+
+.engQuizSubtitle {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.engQuizTimer {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #e76f51;
+  font-weight: bold;
+}
+
+.engQuizQuestion h3 {
+  font-size: 1.3rem;
+  margin: 1rem 0 0.5rem 0;
+  color: #222;
+  font-weight: 600;
+}
+
+.engQuizOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+/* ตัวเลือก/ปุ่ม (Option) */
+.engQuizOption {
+  padding: 1rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, #2563eb 60%, #f87171 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 12px 0 rgba(37,99,235,0.07);
+  outline: none;
+  text-align: center;
+  font-weight: 500;
+}
+.engQuizOption:hover {
+  background: linear-gradient(120deg, #1e40af 60%, #ef4444 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+.engQuizOption.selected {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px 0 rgba(37,99,235,0.13);
+}
+
+.engQuizButtons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.engQuizButtons button {
+  background: #2563eb;
+  color: white;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  font-weight: 600;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.06);
+}
+.engQuizButtons button:hover:not(:disabled) {
+  background: #1e40af;
+  transform: translateY(-2px) scale(1.03);
+}
+.engQuizButtons button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.engQuizResult {
+  margin-top: 2rem;
+  background: #f0f9ff;
+  padding: 1.2rem 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(60,60,60,0.06);
+  color: #222;
+}
+
+.engQuizWrong {
+  margin-top: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.04);
+}
+
+.engQuizWrong ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.engQuizWrong li {
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.engQuizBgRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1000px;
+  height: 1000px;
+  background: url('English teacher-amico.png') no-repeat right bottom/contain;
+  opacity: 0.13;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .engQuizLayout {
+    flex-direction: column;
+    min-height: unset;
+    height: unset;
+  }
+  .engQuizIllustration,
+  .engQuizMain {
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+  .engQuizIllustration {
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 180px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .engQuizMain {
+    padding: 1.2rem 0.5rem;
+  }
+  .engQuizIllustration {
+    padding: 1.2rem 0.5rem;
+  }
+  .engQuizMain h2 {
+    font-size: 1.2rem;
+  }
+  .engQuizQuestion h3 {
+    font-size: 1rem;
+  }
+  .engQuizOption {
+    font-size: 0.98rem;
+    padding: 0.7rem;
+  }
+}

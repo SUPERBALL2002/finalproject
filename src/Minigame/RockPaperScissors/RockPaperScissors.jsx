@@ -61,28 +61,38 @@ const RockPaperScissors = () => {
     setScore({ win: 0, draw: 0, lose: 0 });
   };
 
-
   return (
-        <div className={styles.rockPaperScissorsBackground}>
-            <div className={styles.rockPaperScissorsContainer}>
-            <h2>✊✋✌️ เป่ายิ้งฉุบ! ✌️✋✊</h2>
-            <p>เลือกอันใดอันหนึ่ง</p>
-            <div className={styles.rockPaperScissorsChoices}>
-                {choices.map((choice) => (
-                <button
-                    key={choice.name}
-                    className={styles.rockPaperScissorsChoiceButton}
-                    onClick={() => handleChoice(choice.name)}
-                    disabled={playing}
-                >
-                    {choice.emoji}
-                </button>
-                ))}
-            </div>
-        </div>       
+    <div className={styles.rockPaperScissorsBackground}>
+      <div className={styles.rockPaperScissorsBgMain}></div>
+      <div className={styles.rockPaperScissorsContainer}>
+        <h2>✊✋✌️ เป่ายิ้งฉุบ! ✌️✋✊</h2>
+        <p>เลือกอันใดอันหนึ่ง</p>
+        <div className={styles.rockPaperScissorsChoices}>
+          {choices.map((choice) => (
+            <button
+              key={choice.name}
+              className={styles.rockPaperScissorsChoiceButton}
+              onClick={() => handleChoice(choice.name)}
+              disabled={playing}
+            >
+              {choice.emoji}
+            </button>
+          ))}
+        </div>
+      </div>
       <div className={styles.rockPaperScissorsResultBox}>
-        <p>👤 คุณเลือก: <span className={animating ? styles.rockPaperScissorsHand : ""}>{animating ? "✊" : (playerChoice ? choices.find(c => c.name === playerChoice).emoji : "❓")}</span></p>
-        <p>🤖 คอมพิวเตอร์: <span className={animating ? styles.rockPaperScissorsHand : ""}>{animating ? "✊" : (computerChoice ? computerChoice.emoji : "❓")}</span></p>
+        <p>
+          👤 คุณเลือก:{" "}
+          <span className={animating ? styles.rockPaperScissorsHand : ""}>
+            {animating ? "✊" : playerChoice ? choices.find((c) => c.name === playerChoice).emoji : "❓"}
+          </span>
+        </p>
+        <p>
+          🤖 คอมพิวเตอร์:{" "}
+          <span className={animating ? styles.rockPaperScissorsHand : ""}>
+            {animating ? "✊" : computerChoice ? computerChoice.emoji : "❓"}
+          </span>
+        </p>
         <h3>{result}</h3>
       </div>
 
@@ -90,7 +100,9 @@ const RockPaperScissors = () => {
         <p>🏆 ชนะ: {score.win} | 🔄 เสมอ: {score.draw} | ❌ แพ้: {score.lose}</p>
       </div>
 
-      <button className={styles.rockPaperScissorsResetButton} onClick={resetGame}>🔄 เริ่มใหม่</button>
+      <button className={styles.rockPaperScissorsResetButton} onClick={resetGame}>
+        🔄 เริ่มใหม่
+      </button>
     </div>
   );
 };

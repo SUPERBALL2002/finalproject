@@ -1,0 +1,249 @@
+/* Minimal Modern ThaiQuiz Layout - ใช้ชื่อ class แบบ camelCase และ prefix thaiQuiz สำหรับ CSS Module */
+
+.thaiQuizLayout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  /* สีพื้นหลังแนวอบอุ่น นุ่มนวล สื่อถึงภาษาไทย: ชมพู-ส้ม-เหลือง */
+  background: linear-gradient(120deg, #fff7e6 0%, #ffe0b2 50%, #ffd6e0 100%);
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+.thaiQuizIllustration {
+  width: 40%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  box-shadow: 2px 0 24px 0 rgba(60,60,60,0.06);
+  z-index: 1;
+}
+
+.thaiQuizIllustration img {
+  width: 80%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.08);
+  background: #f8fafb;
+  padding: 12px;
+  transition: transform 0.2s;
+}
+.thaiQuizIllustration img:hover {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow: 0 16px 40px 0 rgba(44, 62, 80, 0.13);
+}
+
+.thaiQuizMain {
+  width: 60%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: none;
+}
+
+.thaiQuizMain h2 {
+  font-size: 2rem;
+  color: #2563eb;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+}
+
+.thaiQuizSubtitle {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.thaiQuizTimer {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #e76f51;
+  font-weight: bold;
+}
+
+.thaiQuizQuestion h3 {
+  font-size: 1.3rem;
+  margin: 1rem 0 0.5rem 0;
+  color: #222;
+  font-weight: 600;
+}
+
+.thaiQuizOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.thaiQuizOption {
+  padding: 1rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, #ffb74d 60%, #f06292 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 12px 0 rgba(255,183,77,0.07);
+  outline: none;
+  text-align: center;
+  font-weight: 500;
+}
+.thaiQuizOption:hover {
+  background: linear-gradient(120deg, #f06292 60%, #ffb74d 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+.thaiQuizOption.selected {
+  background: #f06292;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px 0 rgba(240,98,146,0.13);
+}
+
+.thaiQuizButtons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.thaiQuizButtons button {
+  background: #2563eb;
+  color: white;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  font-weight: 600;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.06);
+}
+.thaiQuizButtons button:hover:not(:disabled) {
+  background: #1e40af;
+  transform: translateY(-2px) scale(1.03);
+}
+.thaiQuizButtons button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.thaiQuizResult {
+  margin-top: 2rem;
+  background: #f0f9ff;
+  padding: 1.2rem 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(60,60,60,0.06);
+  color: #222;
+}
+
+.thaiQuizWrong {
+  margin-top: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.04);
+}
+
+.thaiQuizWrong ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.thaiQuizWrong li {
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.5rem;
+}
+
+/* ตัวอย่างสีพื้นหลังและปุ่มสำหรับวิชาภาษาไทย */
+
+/* สีพื้นหลังแนวอบอุ่น นุ่มนวล สื่อถึงภาษาไทย: ชมพู-ส้ม-เหลือง */
+.thaipageContainer {
+  font-family: var(--main-font);
+  background: linear-gradient(120deg, #fff7e6 0%, #ffe0b2 50%, #ffd6e0 100%);
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 32px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ตัวเลือก/ปุ่ม (Option) */
+.thaipageItem {
+  background: linear-gradient(120deg, #ffb74d 60%, #f06292 100%);
+  color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.7rem;
+  font-weight: 500;
+  box-shadow: 0 2px 12px 0 rgba(255,183,77,0.07);
+  transition: background 0.18s, transform 0.18s;
+  cursor: pointer;
+}
+.thaipageItem:hover {
+  background: linear-gradient(120deg, #f06292 60%, #ffb74d 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.thaiQuizBgRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1000px;
+  height: 1000px;
+  background: url('pngtree-doctoral-hat-literature-doctoral-simple-cartoon-free-png-png-image_4611166.jpg') no-repeat right bottom/contain;
+  opacity: 0.13;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .thaiQuizLayout {
+    flex-direction: column;
+    min-height: unset;
+    height: unset;
+  }
+  .thaiQuizIllustration,
+  .thaiQuizMain {
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+  .thaiQuizIllustration {
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 180px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .thaiQuizMain {
+    padding: 1.2rem 0.5rem;
+  }
+  .thaiQuizIllustration {
+    padding: 1.2rem 0.5rem;
+  }
+  .thaiQuizMain h2 {
+    font-size: 1.2rem;
+  }
+  .thaiQuizQuestion h3 {
+    font-size: 1rem;
+  }
+  .thaiQuizOption {
+    font-size: 0.98rem;
+    padding: 0.7rem;
+  }
+}

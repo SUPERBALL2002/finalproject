@@ -3,35 +3,42 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const UserProfile = () => {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("⏳ กำลังโหลด...");
-  const [showPopup, setShowPopup] = useState(false); // state สำหรับ popup
+  const [showPopup, setShowPopup] = useState(false);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setShowPopup(true); // แสดง popup
-  };
-
+  const handleLogout = () => setShowPopup(true);
   const confirmLogout = () => {
     localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
     setShowPopup(false);
     navigate("/login");
   };
-
-  const cancelLogout = () => {
-    setShowPopup(false);
-  };
+  const cancelLogout = () => setShowPopup(false);
 
   useEffect(() => {
-    console.log("🔍 คุณอยู่ที่หน้าโปรไฟล์");
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem("userToken");
+      const decoded = jwtDecode(token);
+      const userId = decoded.userID;
+      try {
+        const response = await axios.get(`http://localhost:3001/api/users/${userId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error("ไม่พบข้อมูลผู้ใช้", error);
+      }
+    };
+    fetchUserProfile();
   }, []);
 
   useEffect(() => {
-    const updateStatus = () => {
-      setStatus(navigator.onLine ? "🟢 ออนไลน์" : "🔴 ออฟไลน์");
-    };
+    const updateStatus = () => setStatus(navigator.onLine ? "🟢 ออนไลน์" : "🔴 ออฟไลน์");
     updateStatus();
     window.addEventListener("online", updateStatus);
     window.addEventListener("offline", updateStatus);
@@ -42,84 +49,95 @@ const UserProfile = () => {
   }, []);
 
   useEffect(() => {
-    const calculateProgress = () => {
-      let completedFields = 5;
-      let totalFields = 5;
-      setProgress((completedFields / totalFields) * 100);
-    };
-    calculateProgress();
+    let completedFields = 5;
+    let totalFields = 6;
+    setProgress((completedFields / totalFields) * 100);
   }, []);
 
-  const subjectProgress = {
-    คณิตศาสตร์: 80,
-    วิทยาศาสตร์: 65,
-    ภาษาไทย: 80,
-    ภาษาอังกฤษ: 90,
-  };
-
   return (
-    <div className={styles.userProfileContainer}>
+    <div className={styles.userProfilePage}>
       <header className={styles.userProfileHeader}>
         <button className={styles.userProfileBackButton} onClick={() => navigate("/homepage")}>
           🔙
         </button>
-        <h1>โปรไฟล์ของฉัน</h1>
+        <h1 className={styles.userProfileTitle}>โปรไฟล์ของฉัน</h1>
       </header>
 
-      <div className={styles.userProfileMainContainer}>
-        <div className={styles.userProfileInfoCard}>
-          <h3>👦 การัณยภาส พิศาลสาสน์ </h3>
-          <p><strong>📧 อีเมล:</strong> example@email.com</p>
-          <p><strong>📞 เบอร์โทร:</strong> 098-7654321</p>
-          <p><strong>🎂 วันเกิด:</strong> 1 มกราคม 2012</p>
-          <p><strong>🏡 ที่อยู่:</strong> กรุงเทพฯ, ไทย</p>
-          <p><strong>🦸 สถานะ:</strong> <span className={styles.userProfileStatus}>{status}</span></p>
-          <div className={styles.userProfileProgressContainer}>
-            <div className={styles.userProfileProgressLabel}>📊 โปรไฟล์สมบูรณ์: <span>{progress}%</span></div>
-            <div className={styles.userProfileProgressBar}>
-              <div className={styles.userProfileProgress} style={{ width: `${progress}%` }}></div>
+      <main className={styles.userProfileMain}>
+        <section className={styles.userProfileCard}>
+          <div className={styles.userProfileAvatarSection}>
+            <img
+              src="/avatar.png"
+              alt="avatar"
+              className={styles.userProfileAvatar}
+            />
+            <div className={styles.userProfileProgressCircle}>
+              <CircularProgressbar
+                value={progress}
+                text={`${Math.round(progress)}%`}
+                styles={buildStyles({
+                  textSize: "16px",
+                  pathColor: "#2563eb",
+                  textColor: "#2563eb",
+                  trailColor: "#e5e7eb",
+                })}
+              />
             </div>
           </div>
-        </div>
-
-        <div className={styles.userProfileStatsCard}>
-          <h3>🏆 สถิติการเล่น</h3>
-          <p><strong>🎮 จำนวนเกมที่เล่นในแต่ละครั้ง:</strong> 50</p>
-          <div className={styles.userProfileChart}>
-            <h3>📊 คะแนนรวมทั้งหมดในแต่ละวิชา</h3>
-            <div className={styles.userProfileSubjectProgressRow}>
-              {Object.entries(subjectProgress).map(([subject, percentage]) => (
-                <div key={subject} className={styles.userProfileSubjectProgressItem}>
-                  <div className={styles.userProfileCircularProgressContainer}>
-                    <CircularProgressbar
-                      value={percentage}
-                      text={`${percentage}%`}
-                      styles={buildStyles({
-                        textSize: "14px",
-                        pathColor: "var(--circular-path-color, #4caf50)",
-                        textColor: "var(--circular-text-color, #333)",
-                        trailColor: "var(--circular-trail-color, #d6d6d6)",
-                      })}
-                    />
-                  </div>
-                  <p className={styles.userProfileSubjectLabel}>{subject}</p>
+          <div className={styles.userProfileInfo}>
+            {userData ? (
+              <>
+                <h2 className={styles.userProfileName}>
+                  {userData.FirstName} {userData.LastName}
+                </h2>
+                <div className={styles.userProfileDetailList}>
+                  <div><span>📧</span> {userData.email}</div>
+                  <div><span>📞</span> {userData.phone_number}</div>
+                  <div><span>🎂</span> {new Date(userData.date_of_birth).toLocaleDateString("en-GB")}</div>
+                  <div><span>🏡</span> {userData.Address}</div>
                 </div>
-              ))}
+              </>
+            ) : (
+              <p>⏳ กำลังโหลดข้อมูลผู้ใช้...</p>
+            )}
+            <div className={styles.userProfileStatusRow}>
+              <span className={styles.userProfileStatusLabel}>สถานะ:</span>
+              <span className={styles.userProfileStatus}>{status}</span>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className={styles.userProfileSettingsCard}>
+        <section className={styles.userProfileStatsSection}>
+          <div className={styles.userProfileSubjectProgressRow}>
+            {userData?.subject && Object.entries(userData.subject).map(([subject, percentage]) => (
+              <div key={subject} className={styles.userProfileSubjectProgressItem}>
+                <CircularProgressbar
+                  value={percentage}
+                  text={`${percentage}%`}
+                  styles={buildStyles({
+                    textSize: "14px",
+                    pathColor: "#60a5fa",
+                    textColor: "#2563eb",
+                    trailColor: "#e5e7eb",
+                  })}
+                />
+                <div className={styles.userProfileSubjectLabel}>{subject}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.userProfileActions}>
           <Link to="/account-settings">
-            <button className={`${styles.userProfileButton} ${styles.userProfileEditButton}`}>
-              ⚙️ แก้ไขข้อมูส่วนตัว
+            <button className={styles.userProfileEditButton}>
+              ⚙️ แก้ไขข้อมูลส่วนตัว
             </button>
           </Link>
           <button className={styles.userProfileLogoutButton} onClick={handleLogout}>
             🚪 ออกจากระบบ
           </button>
-        </div>
-      </div>
+        </section>
+      </main>
 
       {showPopup && (
         <div className={styles.userProfileLogoutPopup}>

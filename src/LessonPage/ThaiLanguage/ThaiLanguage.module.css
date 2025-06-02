@@ -1,0 +1,223 @@
+/* Minimal Modern ThaiPage - ใช้ชื่อ class เฉพาะ thaipage- (camelCase สำหรับ CSS Module) */
+
+:root {
+  --main-bg: linear-gradient(135deg, #e3f0ff 0%, #f7fafc 100%);
+  --main-primary: #2563eb;
+  --main-primary-dark: #1e40af;
+  --main-accent: #60a5fa;
+  --main-radius: 14px;
+  --main-shadow: 0 2px 16px 0 rgba(60,60,60,0.07);
+  --main-font: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  --main-divider: #e0e7ef;
+  --main-gradient-card: linear-gradient(120deg, #e0e7ff 60%, #f0f9ff 100%);
+}
+
+.thaipageContainer {
+  font-family: var(--main-font);
+  background: var(--main-bg);
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 32px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ลวดลาย background */
+.thaipageContainer::before,
+.thaipageContainer::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(12px);
+}
+.thaipageContainer::before {
+  top: -80px;
+  left: -80px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #60a5fa33 60%, transparent 100%);
+}
+.thaipageContainer::after {
+  bottom: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #2563eb22 60%, transparent 100%);
+}
+
+/* รูปพื้นหลังมุมซ้ายบน */
+.thaipageBgTopLeft {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 800px;
+  height: 1000px;
+  background: url('Exams-rafiki.png') no-repeat center/contain;
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* รูปพื้นหลังมุมขวาล่าง */
+.thaipageBgBottomRight {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 800px;
+  height: 800px;
+  background: url('Teacher\ student-bro.png') no-repeat center/contain;
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.thaipageHeader {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  color: var(--main-primary-dark);
+  padding: 22px 32px 18px 32px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+  border-bottom: 3px solid var(--main-accent);
+}
+
+.thaipageScore {
+  font-size: 1.1rem;
+  color: var(--main-accent);
+  font-weight: 600;
+}
+
+.thaipageItems {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.thaipageTitle {
+  background: var(--main-gradient-card);
+  color: var(--main-primary-dark);
+  padding: 18px 24px;
+  font-weight: 600;
+  font-size: 1.13rem;
+  margin-top: 0;
+  cursor: pointer;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.18s;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 6px solid var(--main-accent);
+  position: relative;
+  overflow: hidden;
+  gap: 12px;
+  letter-spacing: 0.5px;
+}
+.thaipageTitle:hover, .thaipageTitle:focus {
+  background: linear-gradient(90deg, #2563eb 80%, #60a5fa 100%);
+  color: #fff;
+  box-shadow: 0 6px 32px 0 rgba(60,60,60,0.13);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.thaipageSection {
+  margin-bottom: 32px;
+}
+
+.thaipageItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  margin: 0;
+  background: #fff;
+  cursor: pointer;
+  border-radius: var(--main-radius);
+  font-size: 1.13rem;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
+  box-shadow: var(--main-shadow);
+  border: none;
+  border-left: 6px solid var(--main-accent);
+  position: relative;
+  gap: 10px;
+}
+.thaipageItem:hover, .thaipageItem.active {
+  background: var(--main-accent);
+  color: #fff;
+  box-shadow: 0 6px 32px 0 rgba(96,165,250,0.18);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.thaipageItemScore {
+  font-size: 1rem;
+  color: #fff;
+  background: #60a5fa;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-weight: 500;
+  margin-left: 12px;
+  transition: background 0.18s, color 0.18s;
+}
+.thaipageItem:hover .thaipageItemScore {
+  background: #fff;
+  color: #2563eb;
+}
+
+.slide-down {
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .thaipageHeader,
+  .thaipageItems {
+    max-width: 98vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+}
+@media (max-width: 500px) {
+  .thaipageHeader,
+  .thaipageItems {
+    padding-left: 4vw;
+    padding-right: 4vw;
+    font-size: 1rem;
+  }
+  .thaipageTitle, .thaipageItem {
+    font-size: 0.98rem;
+    padding: 12px 10px;
+  }
+}

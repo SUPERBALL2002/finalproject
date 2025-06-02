@@ -1,10 +1,8 @@
 import React from "react";
-import { Link , useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Welcomepage.module.css";
 
 const Welcompage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className={styles.background}>
       <div className={styles.contentBox}>

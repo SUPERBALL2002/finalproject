@@ -5,8 +5,8 @@ import styles from "./HomePage.module.css";
 const HomePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSubject, setActiveSubject] = useState(null);
-  const [showPopup, setShowPopup] = useState(false); // popup logout เดิม
-  const [showLoginPopup, setShowLoginPopup] = useState(false); // popup เตือนล็อกอิน
+  const [showPopup, setShowPopup] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -56,6 +56,11 @@ const HomePage = () => {
 
   return (
     <div className={styles.homePageWrapper}>
+      <div className={`${styles.homePageBgCorner} ${styles.topleft}`}></div>
+      <div className={`${styles.homePageBgCorner} ${styles.topright}`}></div>
+      <div className={`${styles.homePageBgCorner} ${styles.bottomleft}`}></div>
+      <div className={`${styles.homePageBgCorner} ${styles.bottomright}`}></div>
+
       <header className={styles.homePageHeader}>
         <h1>📚 เรียนสนุก ไปกับเรา!</h1>
         <p>เรียนง่าย สนุก ได้ความรู้ พร้อมกิจกรรมที่ทำให้เด็ก ๆ เพลิดเพลิน</p>
@@ -88,8 +93,22 @@ const HomePage = () => {
         </ul>
       </div>
 
+      {/* 🧠 ส่วนเนื้อหาวิชา */}
+      <h2 className={styles.homePageSectionTitle}>📖 เนื้อหาการเรียนรู้</h2>
+      <div className={styles.homePageQuickAccess}>
+        <button className={styles.homePageQuickBtn} onClick={() => navigate("/mathlearning")}>เข้าเนื้อหาคณิตศาสตร์</button>
+        <button className={styles.homePageQuickBtn} onClick={() => navigate("/sciencelearning")}>เข้าเนื้อหาวิทยาศาสตร์</button>
+        <button className={styles.homePageQuickBtn} onClick={() => navigate("/thailearning")}>เข้าเนื้อหาภาษาไทย</button>
+        <button className={styles.homePageQuickBtn} onClick={() => navigate("/englearning")}>เข้าเนื้อหาภาษาอังกฤษ</button>
+      </div>
+
+      {/* 🔸 เส้นคั่นกลาง */}
+      <div className={styles.homePageDivider}></div>
+
+      {/* 📝 ส่วนแบบทดสอบ */}
+      <h2 className={styles.homePageSectionTitle}>📝 แบบทดสอบ</h2>
       <div className={styles.homePageGridContainer}>
-        {[{ icon: "📏", name: "คณิตศาสตร์" }, { icon: "🔬", name: "วิทยาศาสตร์" }, { icon: "📖", name: "ภาษาไทย" }, { icon: "🌍", name: "ภาษาอังกฤษ" }].map((subject) => (
+        {[{ icon: "🧮", name: "คณิตศาสตร์" }, { icon: "🔭", name: "วิทยาศาสตร์" }, { icon: "📚", name: "ภาษาไทย" }, { icon: "🗣️", name: "ภาษาอังกฤษ" }].map((subject) => (
           <button
             key={subject.name}
             className={`${styles.homePageSubject} ${activeSubject === subject.name ? styles.active : ""}`}

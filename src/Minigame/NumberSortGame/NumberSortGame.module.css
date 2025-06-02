@@ -1,94 +1,138 @@
-/* ✅ ตั้งค่าหน้าจอเกม */
-.numberSortGameBackground{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #87CEFA, #4682B4);
+/* Minimal Modern Number Sort Game */
+
+.numberSortGameBackground {
+    font-family: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0e7ef 0%, #f8fafc 100%);
     text-align: center;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .numberSortGameContainer {
-    text-align: center;
-    background-color: #fffbcc;
-    padding: 20px;
-    border-radius: 10px;
-    width: 600px;
-    margin: 20px auto;
-  }
-  
-  /* ✅ หัวข้อเกม */
-  .numberSortGameTitle {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* ✅ กล่องปุ่มตัวเลข */
-  .numberSortGameNumberList {
+    background: rgba(255,255,255,0.95);
+    padding: 36px 32px 28px 32px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(31, 38, 135, 0.10);
+    width: 420px;
+    max-width: 98vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.numberSortGameTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.numberSortGameNumberList {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  
-  /* ✅ ปุ่มตัวเลข */
-  .numberSortGameButton {
-    background-color: #ff9800;
-    border: none;
-    padding: 10px 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    border-radius: 5px;
+    gap: 14px;
+    margin: 18px 0;
+}
+
+.numberSortGameButton {
+    background: #fff;
+    border: 1.5px solid #e5e7eb;
+    padding: 14px 20px;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: #2563eb;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .numberSortGameButton:hover {
-    background-color: #e68900;
-  }
-  
-  /* ✅ ปุ่มตรวจสอบ */
-  .numberSortGameCheckButton {
-    background-color: #4caf50;
+    transition: all 0.18s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.06);
+    outline: none;
+}
+
+.numberSortGameButton:hover,
+.numberSortGameButton:focus {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px 0 rgba(37,99,235,0.13);
+}
+
+.numberSortGameCheckButton,
+.numberSortGameShuffleButton {
+    padding: 12px 28px;
+    font-size: 1.08rem;
+    font-weight: 600;
+    border-radius: 10px;
     border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-    margin-right: 10px;
-    transition: 0.3s;
-  }
-  
-  .numberSortGameCheckButton:hover {
-    background-color: #3d8b40;
-  }
-  
-  /* ✅ ปุ่มสับเปลี่ยนตัวเลข */
-  .numberSortGameShuffleButton {
-    background-color: #2196f3;
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-    transition: 0.3s;
-  }
-  
-  .numberSortGameShuffleButton:hover {
-    background-color: #1976d2;
-  }
-  
-  /* ✅ ข้อความผลลัพธ์ */
-  .numberSortGameMessage {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 15px;
-  }
+    margin-right: 10px;
+    transition: all 0.18s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.06);
+}
+
+.numberSortGameCheckButton {
+    background: #22c55e;
+    color: #fff;
+}
+
+.numberSortGameCheckButton:hover {
+    background: #15803d;
+    transform: scale(1.04);
+}
+
+.numberSortGameShuffleButton {
+    background: #2563eb;
+    color: #fff;
+    margin-right: 0;
+}
+
+.numberSortGameShuffleButton:hover {
+    background: #1746a0;
+    transform: scale(1.04);
+}
+
+.numberSortGameMessage {
+    font-size: 1.13rem;
+    font-weight: 600;
+    margin-top: 18px;
+    color: #2563eb;
+    letter-spacing: 0.5px;
+}
+
+.numberSortGameBgMain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 520px;
+    height: 520px;
+    background: url('1200x600wa.png') no-repeat center/contain;
+    opacity: 0.10;
+    z-index: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 600px) {
+    .numberSortGameContainer {
+        width: 98vw;
+        padding: 16px 2vw;
+    }
+    .numberSortGameNumberList {
+        gap: 8px;
+    }
+    .numberSortGameButton {
+        padding: 10px 10px;
+        font-size: 1rem;
+    }
+    .numberSortGameCheckButton,
+    .numberSortGameShuffleButton {
+        padding: 10px 12px;
+        font-size: 1rem;
+    }
+}

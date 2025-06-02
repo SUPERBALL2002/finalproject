@@ -1,0 +1,225 @@
+.sciLearningMainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(120deg, #f8fbff 0%, #e0ecfc 100%);
+  padding: 48px 0;
+  box-sizing: border-box;
+  gap: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Minimal background image at bottom right */
+.sciLearningMainContainer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 800px;
+  height: 800px;
+  background: url('./Robotics-bro.png') no-repeat right bottom;
+  background-size: contain;
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Additional background image at top left */
+.sciLearningMainContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 800px;
+  background: url('./Time machine-bro.png') no-repeat left top;
+  background-size: contain;
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content above background */
+.sciLearningLeftContainer,
+.sciLearningRightContainer {
+  position: relative;
+  z-index: 1;
+}
+
+/* เพิ่ม scroll ให้กับกล่องเนื้อหา */
+.sciLearningRightContainer {
+  flex: 2 1 600px;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.10);
+  padding: 40px 36px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: box-shadow 0.2s;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b3c6e0 #f4f8fd;
+}
+
+/* สไตล์ scrollbar สำหรับ Chrome */
+.sciLearningRightContainer::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+  background: #f4f8fd;
+}
+.sciLearningRightContainer::-webkit-scrollbar-thumb {
+  background: #b3c6e0;
+  border-radius: 8px;
+}
+
+.sciLearningLeftContainer {
+  flex: 1 1 440px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.10);
+  padding: 40px 28px;
+  min-width: 320px;
+  margin-right: 0;
+  transition: box-shadow 0.2s;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b3c6e0 #f4f8fd;
+}
+
+/* สไตล์ scrollbar สำหรับ Chrome */
+.sciLearningLeftContainer::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+  background: #f4f8fd;
+}
+.sciLearningLeftContainer::-webkit-scrollbar-thumb {
+  background: #b3c6e0;
+  border-radius: 8px;
+}
+
+.sciLearningTitle {
+  font-size: 2rem;
+  color: #2563eb;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: 1.2px;
+}
+
+.sciLearningIntro {
+  font-size: 1.12rem;
+  color: #444;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.sciLearningSection h2 {
+  font-size: 1.15rem;
+  color: #2563eb;
+  margin-bottom: 8px;
+  margin-top: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.sciLearningSection ol,
+.sciLearningSection ul {
+  margin: 0 0 0 22px;
+  padding: 0;
+  color: #333;
+  font-size: 1.04rem;
+  line-height: 1.8;
+}
+
+.sciLearningTipBox {
+  margin-top: 16px;
+  background: #f4f8fd;
+  border-left: 3px solid #2563eb;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 1.01rem;
+  box-shadow: 0 1px 4px 0 rgba(44,62,80,0.04);
+}
+
+.sciLearningVideoTitle {
+  font-size: 1.08rem;
+  color: #2563eb;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.sciLearningVideoDesc {
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 0.98rem;
+  margin-top: 8px;
+}
+
+.sciLearningBackButton {
+  margin-top: 28px;
+  background: linear-gradient(90deg, #2563eb 60%, #54e9e9 100%);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 36px 12px 28px;
+  font-weight: 700;
+  font-size: 1.08rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px 0 rgba(44,62,80,0.10);
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 1px;
+}
+.sciLearningBackButton:hover, .sciLearningBackButton:focus {
+  background: linear-gradient(90deg, #1746a0 60%, #54e9e9 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px 0 rgba(44,62,80,0.13);
+}
+.sciLearningBackIcon {
+  font-size: 1.3em;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .sciLearningMainContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 0;
+  }
+  .sciLearningLeftContainer, .sciLearningRightContainer {
+    max-width: 98vw;
+    width: 100%;
+    margin: 0;
+    border-radius: 14px;
+    padding: 18px 8px 18px 8px;
+  }
+  .sciLearningRightContainer {
+    padding: 18px 8px 18px 8px;
+  }
+  .sciLearningTitle {
+    font-size: 1.3rem;
+  }
+  .sciLearningMainContainer::after {
+    width: 180px;
+    height: 180px;
+  }
+}

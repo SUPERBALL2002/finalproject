@@ -1,48 +1,106 @@
 .miniGameContainer {
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #96dffc, #ffffff);
-    font-family: "Arial", sans-serif;
-    padding: 20px;
+    background: 
+        linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%),
+        url('./Gameanalytics-pana.png') center/cover no-repeat;
+    font-family: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+    padding: 40px 0;
+    background-blend-mode: lighten;
+    background-color: rgba(255,255,255,0.7); /* เพิ่มความโปร่งใสของพื้นหลัง */
+  }
+  
+  .miniGameHeader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .miniGametitle {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 2.1rem;
+    color: #2563eb;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: 1.2px;
     text-align: center;
+    background: none;
   }
   
   .miniGameGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
     max-width: 800px;
     width: 100%;
-    padding: 20px;
-    justify-content: center; /* ทำให้ปุ่มอยู่ตรงกลาง */
+    padding: 24px 16px;
+    justify-content: center;
+    margin-bottom: 32px;
+    margin-top: 0;
   }
   
   .gameButton {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 15px;
-    font-size: 1.2rem;
-    border-radius: 8px;
+    background: #fff;
+    color: #2563eb;
+    border: 1.5px solid #e5e7eb;
+    padding: 28px 0;
+    font-size: 1.18rem;
+    font-weight: 600;
+    border-radius: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.18s cubic-bezier(.4,0,.2,1);
     text-align: center;
+    box-shadow: 0 2px 12px 0 rgba(31, 38, 135, 0.06);
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
   
-  .gameButton:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+  .gameButton:hover, .gameButton:focus {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px 0 rgba(37,99,235,0.13);
   }
   
   .gameButton:active {
-    background-color: #3e8e41;
+    background: #e0e7ef;
+    color: #2563eb;
     transform: scale(0.98);
   }
   
+  .gameIcon {
+    font-size: 2.5rem;
+    margin-bottom: 6px;
+  }
+  
+  .gameLabel {
+    font-size: 1.13rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  @media (max-width: 600px) {
+    .miniGameGrid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 12px 4vw;
+    }
+    .miniGametitle {
+      font-size: 1.3rem;
+    }
+    .gameButton {
+      font-size: 1rem;
+      padding: 18px 0;
+    }
+    .gameIcon {
+      font-size: 2rem;
+    }
+  }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; // ✅ ใช้ axios สำหรับเรียก API
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -8,23 +9,31 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    const mockUser = { username: "testuser", password: "123456" };
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/api/users/login", {
+        Username: username,
+        Password: password,
+      });
 
-    if (username === mockUser.username && password === mockUser.password) {
-      // ตั้งค่า userToken เป็น "loggedIn"
-      localStorage.setItem("userToken", "loggedIn");
-      navigate("/homepage"); 
-    } else {
-      setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+      const { token } = response.data;
+
+      // ✅ เก็บ token ลง localStorage
+      localStorage.setItem("userToken", token);
+
+      // ✅ นำทางไปหน้า homepage
+      navigate("/homepage");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
     }
   };
 
-  // ตรวจสอบสถานะการเข้าสู่ระบบเมื่อโหลดหน้า
+  // ตรวจสอบ token ใน localStorage เมื่อโหลดหน้า
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
-    if (userToken === "loggedIn") {
-      navigate("/homepage"); // หากเข้าสู่ระบบแล้ว ให้นำทางไปยังหน้า homepage
+    if (userToken) {
+      navigate("/homepage");
     }
   }, [navigate]);
 
@@ -33,7 +42,7 @@ const LoginPage = () => {
       <div className={styles.background}></div>
 
       <div className={styles.loginContainer}>
-        <h1>RYZEN</h1>
+        <h1>Welcome Kid</h1>
         <input
           className={styles.inputField}
           type="text"
@@ -49,15 +58,14 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {error && <p className={styles.error}>{error}</p>}
-        
-        <Link to="/forgotpassword" className={styles.forgotPassword}>
-          Forgot password
-        </Link>
         <button className={styles.loginBtn} onClick={handleLogin}>
           เข้าสู่ระบบ
         </button>
         <Link to="/register" className={styles.signupBtn}>
           สมัครสมาชิก
+        </Link>
+        <Link to="/Forgotpassword" className={styles.forgotPasswordLink}>
+          ลืมรหัสผ่าน?
         </Link>
       </div>
     </div>

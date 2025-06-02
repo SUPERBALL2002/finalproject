@@ -1,7 +1,8 @@
-/* ✅ ตั้งค่าสีพื้นหลังของเกม */
+/* Minimal Modern Memory Game */
+
 .memoryGameBackground {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #87CEFA, #4682B4);
+    font-family: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0e7ef 0%, #f8fafc 100%);
     text-align: center;
     min-height: 100vh;
     display: flex;
@@ -11,44 +12,61 @@
 
 /* ✅ กล่องของเกม */
 .memoryGameContainer {
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fffbcc;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 440px;
+    width: 100%;
+    padding: 32px 24px 28px 24px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(31, 38, 135, 0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
 
 /* ✅ ตารางการ์ด */
 .memoryGameGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+    gap: 16px;
+    margin-top: 18px;
 }
 
 /* ✅ การ์ด */
 .memoryGameCard {
-    width: 80px;
-    height: 80px;
-    font-size: 24px;
-    background: lightgray;
+    width: 72px;
+    height: 72px;
+    font-size: 1.7rem;
+    background: #f3f4f6;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
-    transition: transform 0.3s, background 0.3s ease;
+    transition: transform 0.18s, background 0.18s, box-shadow 0.18s;
+    box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.06);
+    border: 1.5px solid #e5e7eb;
+    user-select: none;
+    color: #2563eb;
+    font-weight: 600;
+    position: relative;
 }
 
 /* ✅ เอฟเฟกต์ตอนคลิกการ์ด */
 .memoryGameCard:hover {
-    transform: scale(1.1);
+    transform: scale(1.07);
+    background: #e0e7ef;
+    box-shadow: 0 4px 16px 0 rgba(37,99,235,0.10);
 }
 
 /* ✅ การ์ดที่พลิกแล้ว */
 .memoryGameCard.flipped {
-    background: #FFD700;
-    font-size: 28px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 2rem;
+    border-color: #2563eb;
+    box-shadow: 0 4px 16px 0 rgba(37,99,235,0.13);
+    z-index: 2;
 }
 
 /* ✅ การ์ดที่จับคู่สำเร็จ (หายไป) */
@@ -58,19 +76,22 @@
 
 /* ✅ ปุ่มเล่นใหม่ */
 .memoryGameResetButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #FF4500;
-    color: white;
-    font-size: 16px;
+    margin-top: 18px;
+    padding: 12px 32px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 1.08rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.3s;
+    font-weight: 600;
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.08);
+    transition: background 0.18s, transform 0.15s;
 }
 
 .memoryGameResetButton:hover {
-    background: #E63900;
+    background: #1746a0;
+    transform: translateY(-2px) scale(1.04);
 }
 
 /* ✅ Pop-up เมื่อชนะเกม */
@@ -80,36 +101,44 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.18);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .memoryGamePopupContent {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    background: #fff;
+    padding: 32px 24px;
+    border-radius: 16px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 24px rgba(31, 38, 135, 0.13);
+    min-width: 240px;
+    font-size: 1.15rem;
 }
 
 .memoryGamePopupButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: #4CAF50;
-    color: white;
+    margin-top: 16px;
+    padding: 12px 32px;
+    background: #22c55e;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1.08rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.18s, transform 0.15s;
 }
 
 .memoryGamePopupButton:hover {
-    background: #388E3C;
+    background: #15803d;
+    transform: scale(1.04);
 }
+
 /* ✅ เอฟเฟกต์การ์ดที่จับคู่ถูกต้องแล้วหายไป */
 .fadeOut {
-    animation: fadeOut 1s forwards; /* ทำให้การ์ดค่อยๆ หายไป */
+    animation: fadeOut 0.7s forwards; /* ทำให้การ์ดค่อยๆ หายไป */
 }
 
 @keyframes fadeOut {
@@ -120,5 +149,41 @@
     100% {
         opacity: 0;
         transform: scale(0.8);
+    }
+}
+
+/* Background Image */
+.memoryGameBgMain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 540px;
+    height: 540px;
+    background: url('memory-matching-game-clip-art-png-favpng-ENt1uj66sUTr2zfY55h92pgXe.jpg') no-repeat center/contain;
+    opacity: 0.10;
+    z-index: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .memoryGameContainer {
+        max-width: 98vw;
+        padding: 16px 2vw;
+    }
+    .memoryGameGrid {
+        gap: 8px;
+    }
+    .memoryGameCard {
+        width: 18vw;
+        height: 18vw;
+        min-width: 48px;
+        min-height: 48px;
+        font-size: 1.1rem;
+    }
+    .memoryGamePopupContent {
+        padding: 18px 6vw;
+        font-size: 1rem;
     }
 }

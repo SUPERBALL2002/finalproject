@@ -1,50 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AccountSettings.module.css"; // ✅ ใช้ CSS Module
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import styles from "./AccountSettings.module.css";
 
 const AccountSettings = () => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState("/default-avatar.png");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [showPopup, setShowPopup] = useState(false); // ✅ State สำหรับควบคุม Popup
+  const [showPopup, setShowPopup] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-  const [formData, setFormData] = useState(() => {
-    // โหลดข้อมูลจาก Local Storage ถ้ามี
-    const savedData = localStorage.getItem("accountSettings");
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          username: "",
-          email: "",
-          phone: "",
-          address: "",
-          password: "",
-          birthdate: "",
-          notifyEmail: false,
-        };
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    address: "",
+    password: "",
+    birthdate: "",
+    notifyEmail: false,
   });
 
-  // บันทึกข้อมูลลง Local Storage ทุกครั้งที่ formData เปลี่ยน
+  // ✅ ดึง userID จาก token
   useEffect(() => {
-    localStorage.setItem("accountSettings", JSON.stringify(formData));
-  }, [formData]);
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUserId(decoded.userID);
+    }
+  }, []);
 
-  // ✅ ฟังก์ชันอัปโหลดรูปภาพ (ตรวจสอบขนาดและประเภทไฟล์)
+  // ✅ โหลดข้อมูลผู้ใช้จาก backend
+  useEffect(() => {
+    if (!userId) return;
+
+    axios
+      .get(`http://localhost:3001/user/${userId}`)
+      .then((res) => {
+        const { Username, email, phone_number, Address, date_of_birth } = res.data;
+        setFormData((prev) => ({
+          ...prev,
+          username: Username,
+          email,
+          phone: phone_number,
+          address: Address,
+          birthdate: date_of_birth ? date_of_birth.split("T")[0] : "",
+        }));
+      })
+      .catch((err) => {
+        console.error("โหลดข้อมูลไม่สำเร็จ:", err);
+      });
+  }, [userId]);
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
-
-      if (!validImageTypes.includes(file.type)) {
-        alert("กรุณาอัปโหลดเฉพาะไฟล์รูปภาพ (JPG, PNG, GIF ,WEBP)");
-        return;
-      }
-
-      if (file.size > 10 * 1024 * 1024) {
-        alert("ขนาดไฟล์ต้องไม่เกิน 10MB");
-        return;
-      }
+      const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
+      if (!validTypes.includes(file.type)) return alert("กรุณาอัปโหลดไฟล์รูปภาพเท่านั้น");
+      if (file.size > 10 * 1024 * 1024) return alert("ขนาดไฟล์ต้องไม่เกิน 10MB");
 
       const img = new Image();
       img.onload = () => {
@@ -52,60 +66,67 @@ const AccountSettings = () => {
         reader.onload = (e) => setProfileImage(e.target.result);
         reader.readAsDataURL(file);
       };
-      img.onerror = () => {
-        alert("ไฟล์ที่อัปโหลดไม่ใช่รูปภาพที่ถูกต้อง");
-      };
+      img.onerror = () => alert("ไฟล์รูปภาพไม่ถูกต้อง");
       img.src = URL.createObjectURL(file);
     }
   };
 
-  // ✅ ฟังก์ชันจัดการการเปลี่ยนค่าฟอร์ม
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
     if (name === "phone") {
-        const sanitizedValue = value.replace(/\D/g, "").slice(0, 10);
-        setFormData((prev) => ({ ...prev, phone: sanitizedValue }));
-        return;
+      const sanitized = value.replace(/\D/g, "").slice(0, 10);
+      setFormData((prev) => ({ ...prev, phone: sanitized }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
     }
+  };
 
-    setFormData((prev) => ({
-        ...prev,
-        [name]: type === "checkbox" ? checked : value,
-    }));
-};
-
-
-  // ✅ ตรวจสอบข้อมูลก่อนส่ง
   const validateForm = () => {
     let newErrors = {};
-
     if (!formData.username.trim()) newErrors.username = "⚠️ กรุณากรอกชื่อผู้ใช้";
     if (!formData.email.includes("@")) newErrors.email = "⚠️ อีเมลไม่ถูกต้อง";
-    if (formData.phone.length !== 10) newErrors.phone = "⚠️ เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก";
+    if (formData.phone.length !== 10) newErrors.phone = "⚠️ เบอร์โทรต้องมี 10 หลัก";
     if (formData.password && formData.password.length < 6) newErrors.password = "⚠️ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร";
     if (formData.birthdate && new Date(formData.birthdate) > new Date())
       newErrors.birthdate = "⚠️ วันเกิดต้องไม่เป็นอนาคต";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // ✅ ฟังก์ชันบันทึกข้อมูล
-  const handleSubmit = (event) => {
+  // ✅ ฟังก์ชันบันทึกข้อมูลและเชื่อม API
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!validateForm()) return; // ❌ ถ้าฟอร์มไม่ผ่าน Validation ไม่ต้องบันทึก
+    if (!validateForm()) return;
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowPopup(true); // ✅ แสดง Popup หลังบันทึกสำเร็จ
-      localStorage.removeItem("accountSettings"); // ล้าง Local Storage หลังบันทึก
-    }, 2000);
-  };
 
-  const closePopup = () => {
-    setShowPopup(false); // ✅ ปิด Popup
+    try {
+      const updatedData = {
+        Username: formData.username,
+        email: formData.email,
+        phone_number: formData.phone,
+        Address: formData.address,
+        date_of_birth: formData.birthdate,
+      };
+
+      // เพิ่ม password หากมีการเปลี่ยน
+      if (formData.password) {
+        updatedData.password = formData.password;
+      }
+
+      await axios.put(`http://localhost:3001/user/${userId}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      setShowPopup(true);
+    } catch (error) {
+      console.error("อัปเดตข้อมูลไม่สำเร็จ:", error);
+      alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -129,30 +150,22 @@ const AccountSettings = () => {
 
         <form className={styles.accountSettingsForm} onSubmit={handleSubmit}>
           <label className={styles.accountSettingsLabel}>👤 ชื่อผู้ใช้ใหม่</label>
-          <input
-            className={styles.accountSettingsInput}
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="กรอกชื่อใหม่"
-            aria-label="ชื่อผู้ใช้ใหม่"
-          />
+          <input className={styles.accountSettingsInput} type="text" name="username" value={formData.username} onChange={handleChange} />
           {errors.username && <span className={styles.errorText}>{errors.username}</span>}
 
           <label className={styles.accountSettingsLabel}>📧 อีเมลใหม่</label>
-          <input className={styles.accountSettingsInput} type="email" name="email" value={formData.email} onChange={handleChange} placeholder="example@email.com" />
+          <input className={styles.accountSettingsInput} type="email" name="email" value={formData.email} onChange={handleChange} />
           {errors.email && <span className={styles.errorText}>{errors.email}</span>}
 
           <label className={styles.accountSettingsLabel}>📞 เบอร์โทรศัพท์</label>
-          <input className={styles.accountSettingsInput} type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="08X-XXX-XXXX" />
+          <input className={styles.accountSettingsInput} type="tel" name="phone" value={formData.phone} onChange={handleChange} />
           {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
 
           <label className={styles.accountSettingsLabel}>🏡 ที่อยู่</label>
-          <input className={styles.accountSettingsInput} type="text" name="address" value={formData.address} onChange={handleChange} placeholder="กรอกที่อยู่ของคุณ" />
+          <input className={styles.accountSettingsInput} type="text" name="address" value={formData.address} onChange={handleChange} />
 
           <label className={styles.accountSettingsLabel}>🔒 รหัสผ่านใหม่</label>
-          <input className={styles.accountSettingsInput} type="password" name="password" value={formData.password} onChange={handleChange} placeholder="กรอกรหัสผ่านใหม่" />
+          <input className={styles.accountSettingsInput} type="password" name="password" value={formData.password} onChange={handleChange} />
           {errors.password && <span className={styles.errorText}>{errors.password}</span>}
 
           <label className={styles.accountSettingsLabel}>🎂 วันเดือนปีเกิด</label>
@@ -170,12 +183,11 @@ const AccountSettings = () => {
         </form>
       </div>
 
-      {/* ✅ Popup แจ้งเตือน */}
       {showPopup && (
         <div className={styles.popupBackground}>
           <div className={styles.popupContainer}>
             <p>✅ ข้อมูลได้รับการแก้ไขแล้ว</p>
-            <button onClick={closePopup} className={styles.popupButton}>
+            <button onClick={() => setShowPopup(false)} className={styles.popupButton}>
               ตกลง
             </button>
           </div>

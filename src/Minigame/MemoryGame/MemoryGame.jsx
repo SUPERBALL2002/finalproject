@@ -75,6 +75,7 @@ const MemoryGame = () => {
 
   return (
     <div className={styles.memoryGameBackground}>
+      <div className={styles.memoryGameBgMain}></div>
       <div className={styles.memoryGameContainer}>
         <h1>🃏 เกมจับคู่การ์ด 🃏</h1>
         <p>จำนวนครั้งที่เล่น: {moves}</p>

@@ -1,0 +1,217 @@
+/* Minimal Modern MathQuiz Layout - ใช้ชื่อ class แบบ camelCase และ prefix mathQuiz สำหรับ CSS Module */
+
+.mathQuizLayout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  /* เปลี่ยนสีพื้นหลังให้ดูเป็นคณิตศาสตร์มากขึ้น */
+  background: linear-gradient(135deg, #e3f0ff 0%, #b2e0fe 50%, #d1ffe7 100%);
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+.mathQuizIllustration {
+  width: 40%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  box-shadow: 2px 0 24px 0 rgba(60,60,60,0.06);
+  z-index: 1;
+}
+
+.mathQuizIllustration img {
+  width: 80%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.08);
+  background: #f8fafb;
+  padding: 12px;
+  transition: transform 0.2s;
+}
+.mathQuizIllustration img:hover {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow: 0 16px 40px 0 rgba(44, 62, 80, 0.13);
+}
+
+.mathQuizMain {
+  width: 60%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: none;
+}
+
+.mathQuizMain h2 {
+  font-size: 2rem;
+  color: #2563eb;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+}
+
+.mathQuizSubtitle {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.mathQuizTimer {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #e76f51;
+  font-weight: bold;
+}
+
+.mathQuizQuestion h3 {
+  font-size: 1.3rem;
+  margin: 1rem 0 0.5rem 0;
+  color: #222;
+  font-weight: 600;
+}
+
+.mathQuizOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.mathQuizOption {
+  padding: 1rem;
+  font-size: 1.1rem;
+  /* ปรับโทนสีให้ดูคณิตศาสตร์มากขึ้น */
+  background: linear-gradient(120deg, #60a5fa 60%, #43e97b 100%);
+  color: #222;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 12px 0 rgba(60,60,60,0.07);
+  outline: none;
+  text-align: center;
+  font-weight: 500;
+}
+.mathQuizOption:hover {
+  background: linear-gradient(120deg, #2563eb 60%, #43a047 100%);
+  color: #fff;
+  transform: translateY(-2px) scale(1.03);
+}
+.mathQuizOption.selected {
+  background: #2a9d8f;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px 0 rgba(42,157,143,0.13);
+}
+
+.mathQuizButtons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.mathQuizButtons button {
+  background: #2563eb;
+  color: white;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+  font-weight: 600;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.06);
+}
+.mathQuizButtons button:hover:not(:disabled) {
+  background: #1e40af;
+  transform: translateY(-2px) scale(1.03);
+}
+.mathQuizButtons button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.mathQuizResult {
+  margin-top: 2rem;
+  background: #f0f9ff;
+  padding: 1.2rem 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(60,60,60,0.06);
+  color: #222;
+}
+
+.mathQuizWrong {
+  margin-top: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 1px 6px 0 rgba(60,60,60,0.04);
+}
+
+.mathQuizWrong ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.mathQuizWrong li {
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.mathQuizBgRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1000px;
+  height: 1000px;
+  background: url('Calculator-pana.png') no-repeat right bottom/contain;
+  opacity: 0.14;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .mathQuizLayout {
+    flex-direction: column;
+    min-height: unset;
+    height: unset;
+  }
+  .mathQuizIllustration,
+  .mathQuizMain {
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+  .mathQuizIllustration {
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 180px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .mathQuizMain {
+    padding: 1.2rem 0.5rem;
+  }
+  .mathQuizIllustration {
+    padding: 1.2rem 0.5rem;
+  }
+  .mathQuizMain h2 {
+    font-size: 1.2rem;
+  }
+  .mathQuizQuestion h3 {
+    font-size: 1rem;
+  }
+  .mathQuizOption {
+    font-size: 0.98rem;
+    padding: 0.7rem;
+  }
+}

@@ -1,22 +1,68 @@
+/* ปรับพื้นหลังและลวดลายให้ minimal modern */
 :root {
-    --homePageBackground:linear-gradient(135deg, #96dffc, #ffffff);
+    --homePageBackground: linear-gradient(135deg, #fdf6e3 0%, #e0f7fa 50%, #ffe0f0 100%);
+    --primary: #2563eb;
+    --secondary: #60a5fa;
+    --accent: #ffb74d;
+    --shadow: 0 4px 24px 0 rgba(37,99,235,0.08);
+    --radius: 18px;
+    --transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+    --font-main: "Poppins", "Segoe UI", Arial, sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-main);
 }
 
 .homePageWrapper {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: var(--homePageBackground);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    position: relative; /* เพิ่มสำหรับ absolute bg */
+    overflow: hidden;   /* ป้องกัน bg ล้น */
+}
+
+/* พื้นหลัง 4 มุม */
+.homePageBgCorner {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.16; /* เพิ่มความสดใสขึ้นเล็กน้อย */
+    filter: blur(0.5px) grayscale(0.08) brightness(1.08);
+    transition: opacity 0.3s;
+}
+.homePageBgCorner.topright,
+.homePageBgCorner.bottomleft,
+.homePageBgCorner.bottomright {
+    width: 700px;
+    height: 700px;
+}
+.homePageBgCorner.topleft {
+    top: 0;
+    left: 0;
+    background: url('./pngtree-doctoral-hat-literature-doctoral-simple-cartoon-free-png-png-image_4611166.jpg') no-repeat left top/contain;
+}
+.homePageBgCorner.topright {
+    top: 0;
+    right: 0;
+    background: url('./English teacher-amico.png') no-repeat right top/contain;
+}
+.homePageBgCorner.bottomleft {
+    bottom: 0;
+    left: 0;
+    background: url('./Mathematics-amico.png') no-repeat left bottom/contain;
+}
+.homePageBgCorner.bottomright {
+    bottom: 0;
+    right: 0;
+    background: url('./Time machine-bro.png') no-repeat right bottom/contain;
 }
 
 .homePageHeader {
@@ -24,11 +70,12 @@
     top: 0;
     left: 0;
     width: 100vw;
-    background: linear-gradient(135deg, #0099ff, #ffffff);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(6px);
     text-align: center;
-    padding: 0px 0;
-    border-radius: 0;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 18px 0 6px 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,61 +83,123 @@
 }
 
 .homePageHeader h1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
+    font-size: 2.1rem;
+    font-weight: 800;
+    background: none;
+    color: #ffb74d;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px #fffde7;
 }
 
 .homePageHeader p {
-    font-size: 18px;
-    color: #444;
-    margin-top: 10px;
+    font-size: 1.08rem;
+    color: #2563eb;
+    margin-top: 4px;
+    font-weight: 500;
 }
 
 .homePageNavbar {
     width: 100%;
-    background-color: #3d7ef7;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 30px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px 24px;
+    box-shadow: none;
     z-index: 1000;
+    border-radius: 0 0 var(--radius) var(--radius);
+    border-bottom: 1.5px solid #e5eaf2;
+}
+
+.homePageQuickAccess {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 48px;
+    justify-items: center;
+    padding: 56px 32px 40px 32px;
+    max-width: 1200px;
+    margin-top: 24px;
+}
+
+.homePageQuickBtn {
+    background: #fff;
+    color: #2563eb;
+    font-size: 1.18rem;
+    width: 200px;
+    height: 200px;
+    border-radius: var(--radius);
+    border: 2px solid #ffe082;
+    box-shadow: 0 2px 12px 0 rgba(129,212,250,0.10);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    padding: 18px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.homePageQuickBtn:hover, .homePageQuickBtn:focus {
+    background: linear-gradient(90deg, #81d4fa 0%, #ffb74d 100%);
+    color: #2563eb;
+    transform: translateY(-2px) scale(1.04);
 }
 
 .homePageGridContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 48px;
     justify-items: center;
-    padding: 40px;
+    padding: 56px 32px 40px 32px;
     max-width: 1200px;
-    margin-top: 120px; /* ✅ แก้ไข margin-top เพื่อไม่ให้ทับ navbar */
+    margin-top: 24px;
 }
 
 .homePageSubject {
-    background-color: #1ea2df;
-    color: white;
-    font-size: 28px;
-    width: 350px;
-    padding: 30px;
-    text-align: center;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    border: 3px solid white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: #2563eb;
+    font-size: 1.18rem;
+    width: 200px;
+    height: 200px;
+    border-radius: var(--radius);
+    border: 2px solid #ffe082;
+    box-shadow: 0 2px 12px 0 rgba(129,212,250,0.10);
+    transition: var(--transition);
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    font-weight: bold;
+    align-items: center;
+    font-weight: 700;
+    padding: 18px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
-
-.homePageSubject:hover {
-    transform: translate(-10px , -20px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+.homePageSubject::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    right: -24px;
+    width: 48px;
+    height: 48px;
+    background: radial-gradient(circle, #ffb74d 0%, transparent 70%);
+    opacity: 0.13;
+    z-index: 0;
+}
+.homePageSubject:hover, .homePageSubject:focus {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 6px 24px 0 rgba(129,212,250,0.18);
+    border-color: #81d4fa;
+    background: #f8fafc;
+}
+.homePageSubject:active {
+    transform: scale(0.98);
+    background: #e3f0ff;
 }
 
 @keyframes clickAnimation {
@@ -108,19 +217,18 @@
     }
 }
 
-.homePageSidebarButton:active {
-    animation: clickAnimation 0.5s ease-in-out;
-}
 .homePageSidebar {
     position: fixed;
     top: 0;
     right: -250px;
     width: 250px;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.92);
     color: white;
-    padding: 20px;
-    transition: right 0.3s ease-in-out;
+    padding: 28px 20px;
+    transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: -4px 0 24px 0 rgba(0,0,0,0.18);
+    z-index: 1200;
 }
 
 .homePageSidebarOpen {
@@ -129,25 +237,27 @@
 
 .homePageSidebarButton {
     display: block;
-    padding: 15px 15px;
-    margin: 20px 0;
-    margin-top: 50px;
-    background: linear-gradient(135deg, #0099ff, #00bfff); /* เปลี่ยนสี gradient ให้เข้ากับสีหน้าหลัก */
+    padding: 16px 18px;
+    margin: 24px 0 0 0;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     font-weight: bold;
     text-align: center;
-    border-radius: 10px;
-    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+    transition: var(--transition);
     text-decoration: none;
+    border: none;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px 0 rgba(0,153,255,0.08);
 }
 
 .homePageSidebarButton:hover {
-    background: linear-gradient(135deg, #00bfff, #1ea2df); /* สร้างการเปลี่ยนแปลงของ gradient */
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--secondary), var(--accent));
+    transform: scale(1.07);
 }
 
 .homePageSidebarButton:active {
-    background: linear-gradient(135deg, #007acc, #0099ff); /* กดแล้วเป็น gradient ที่เข้มขึ้น */
+    background: linear-gradient(135deg, #007acc, #0099ff);
     transform: scale(0.98);
 }
 
@@ -155,12 +265,17 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 22px;
+    font-size: 26px;
     background: transparent;
     border: none;
     color: white;
     cursor: pointer;
+    transition: color 0.2s;
 }
+.homePageCloseBtn:hover {
+    color: var(--accent);
+}
+
 @keyframes fadeInPopup {
     0% {
         opacity: 0;
@@ -182,85 +297,129 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
-    animation: fadeInPopup 0.3s ease-in-out; /* เพิ่มอนิเมชั่นที่นี่ */
+    z-index: 2000;
+    animation: fadeInPopup 0.3s ease-in-out;
 }
 
 .homePagePopupContainer {
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 32px 24px;
+    border-radius: 16px;
     text-align: center;
-    width: 300px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    animation: fadeInPopup 0.3s ease-in-out; /* เพิ่มอนิเมชั่นที่นี่ */
+    width: 340px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    animation: fadeInPopup 0.3s ease-in-out;
 }
 
-  
-  .homePagePopupButtons {
+.homePagePopupButtons {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
-  }
-  
-  .homePagePopupConfirmButton,
-  .homePagePopupCancelButton {
-    padding: 10px 20px;
-    font-size: 16px;
+    margin-top: 24px;
+}
+
+.homePagePopupConfirmButton,
+.homePagePopupCancelButton {
+    padding: 12px 28px;
+    font-size: 1.1rem;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .homePagePopupConfirmButton {
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 600;
+}
+
+.homePagePopupConfirmButton {
     background-color: #4caf50;
     color: white;
-  }
-  
-  .homePagePopupConfirmButton:hover {
-    background-color: #45a049;
-  }
-  
-  .homePagePopupCancelButton {
+}
+
+.homePagePopupConfirmButton:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+.homePagePopupCancelButton {
     background-color: #f44336;
     color: white;
-  }
-  
-  .homePagePopupCancelButton:hover {
-    background-color: #e53935;
-  }
-  
-  .homePageFooter {
-    background-color: #fffcfc;
-    padding: 30px;
+}
+
+.homePagePopupCancelButton:hover {
+    background-color: #b71c1c;
+    transform: scale(1.05);
+}
+
+.homePageFooter {
+    background-color: #f8fafc;
+    padding: 28px 0 18px 0;
     text-align: left;
-    margin-top: 160px;
-    font-size: 14px;
-    color: #333;
-    border-top: 1px solid #ddd;
-    width: 1920px;
-  }
-  
-  .homePageFooter h2, .homePageFooter h3 {
-    margin-bottom: 10px;
-    color: #000000;
-  }
-  
-  .homePageFooter ul {
+    margin-top: 120px;
+    font-size: 1.02rem;
+    color: #2563eb;
+    border-top: 2px solid #ffe082;
+    width: 100vw;
+    box-shadow: none;
+}
+.homePageFooter h2, .homePageFooter h3 {
+    margin-bottom: 8px;
+    color: #ffb74d;
+    font-weight: 700;
+}
+.homePageFooter ul {
     list-style-type: disc;
-    margin: 0 auto 20px;
-    padding-left: 20px;
+    margin: 0 auto 14px;
+    padding-left: 18px;
     display: inline-block;
     text-align: left;
-  }
-  
-  .homePageFooter a {
-    color: #0077cc;
-    text-decoration: none;
-  }
-  
-  .homePageFooter a:hover {
+}
+.homePageFooter a {
+    color: #81d4fa;
     text-decoration: underline;
-  }
-  
+    font-weight: 600;
+}
+.homePageFooter a:hover {
+    color: #ffb74d;
+}
+
+.homePageSectionTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-top: 160px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 0 1px 6px #fff;
+}
+
+
+/* Responsive minimal & สดใส */
+@media (max-width: 900px) {
+    .homePageQuickAccess {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 100px;
+        margin-bottom: 0;
+    }
+    .homePageQuickBtn {
+        width: 90vw;
+        height: 100px;
+        font-size: 1rem;
+        padding: 10px;
+    }
+    .homePageGridContainer {
+        margin-top: 6px;
+        padding-top: 0;
+    }
+    .homePageSubject {
+        width: 90vw;
+        height: 100px;
+        font-size: 1rem;
+        padding: 10px;
+    }
+    .homePageHeader h1 {
+        font-size: 1.2rem;
+    }
+    .homePageBgCorner {
+        width: 80px;
+        height: 80px;
+    }
+}

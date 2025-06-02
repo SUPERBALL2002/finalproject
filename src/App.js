@@ -14,14 +14,18 @@ import MemoryGame from "../src/Minigame/MemoryGame/MemoryGame";
 import NumberSortGame from "./Minigame/NumberSortGame/NumberSortGame";
 import RockPaperScissors from "./Minigame/RockPaperScissors/RockPaperScissors";
 import NumberTarget from "./Minigame/NumberTarget/NumberTarget";
-import MathPage from "./LessonPage/Mathpage";
-import SciPage from "./LessonPage/Science";
-import EnglanguagePage from "./LessonPage/EngLanguage";
-import ThlanguagePage from "./LessonPage/ThaiLanguage";
-import EngQuiz from "./LessonPage/Quiz/EngLanguageQuiz";
-import MathQuiz from "./LessonPage/Quiz/MathQuiz";
-import ScienceQuiz from "./LessonPage/Quiz/ScienceQuiz";
-import ThaiQuiz from "./LessonPage/Quiz/ThaiLanguageQuiz";
+import MathPage from "./LessonPage/Mathpage/Mathpage";
+import SciPage from "./LessonPage/Science/Science";
+import EnglanguagePage from "./LessonPage/EngLanguage/EngLanguage";
+import ThlanguagePage from "./LessonPage/ThaiLanguage/ThaiLanguage";
+import EngQuiz from "./LessonPage/Quiz/EngQuiz/EngLanguageQuiz";
+import MathQuiz from "./LessonPage/Quiz/MathQuiz/MathQuiz";
+import ScienceQuiz from "./LessonPage/Quiz/SciQuiz/ScienceQuiz";
+import ThaiQuiz from "./LessonPage/Quiz//ThaiQuiz/ThaiLanguageQuiz";
+import MathLearning from "./Learningpage/MathLearning/MathLeraning";
+import SciLearning from "./Learningpage/SciLearning/SciLearning";
+import EngLearning from "./Learningpage/EngLearning/EngLearning";
+import ThaiLearning from "./Learningpage/ThaiLearning/ThaiLearning";
 function App() {
   return (
     <Router>
@@ -48,6 +52,11 @@ function App() {
         <Route path="/math/Quiz" element = {<MathQuiz />} />
         <Route path="/science/quiz" element = {<ScienceQuiz />} />
         <Route path="/thai/quiz" element = {<ThaiQuiz />} />
+        <Route path="mathlearning" element = {<MathLearning />} />
+        <Route path="sciencelearning" element = {<SciLearning />} />
+        <Route path="englearning" element = {<EngLearning />} />
+        <Route path="thailearning" element = {<ThaiLearning />} />
+        
       </Routes> 
     </Router>
   );

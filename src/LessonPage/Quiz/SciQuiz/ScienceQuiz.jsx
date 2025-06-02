@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import "./Quiz.css";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import styles from "./ScienceQuiz.module.css";
 
 const scienceQuestions = {
     0: { 
@@ -125,12 +125,14 @@ const shuffleArray = (array) => {
 };
 
 const ScienceQuiz = () => {
-    // ใช้ useSearchParams เพื่อดึงค่าพารามิเตอร์จาก URL
     const [searchParams] = useSearchParams();
     const lessonIndex = parseInt(searchParams.get("lesson"), 10);
     const contentIndex = parseInt(searchParams.get("content"), 10);
-    
-    // สร้าง state ต่าง ๆ สำหรับการจัดการข้อมูล
+
+    // Hooks
+    const [lessonFromDB, setLessonFromDB] = useState(null);
+    const navigate = useNavigate();
+    const user = { UserID: localStorage.getItem("userId") };
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState([]);
     const [score, setScore] = useState(null);
@@ -139,17 +141,36 @@ const ScienceQuiz = () => {
     const [isTimeUp, setIsTimeUp] = useState(false);
     const [wrongAnswers, setWrongAnswers] = useState([]);
     const [timerRunning, setTimerRunning] = useState(true);
-    
-    // เมื่อโหลดหน้าใหม่หรือเปลี่ยนบทเรียน จะสุ่มเรียงคำถามใหม่
+
+    // ตรวจสอบ param
+    const isInvalidParam = isNaN(lessonIndex) || isNaN(contentIndex);
+
     useEffect(() => {
+      if (isInvalidParam) return;
+      async function fetchLesson() {
+        try {
+          const res = await fetch(`http://localhost:3001/api/lessons/${lessonIndex + 1}`);
+          if (!res.ok) throw new Error('ไม่พบข้อมูลบทเรียน');
+          const data = await res.json();
+          setLessonFromDB(data);
+        } catch (error) {
+          console.error('โหลดบทเรียนล้มเหลว', error);
+          setLessonFromDB(null);
+        }
+      }
+      fetchLesson();
+    }, [lessonIndex, isInvalidParam]);
+
+    useEffect(() => {
+        if (isInvalidParam) return;
         if (scienceQuestions[lessonIndex]?.[contentIndex]) {
             setShuffledQuestions(shuffleArray([...scienceQuestions[lessonIndex][contentIndex]]));
             setAnswers(Array(10).fill(null));
         }
-    }, [lessonIndex, contentIndex]);
-    
-    // เริ่มจับเวลาถอยหลังเมื่อเริ่มทำแบบทดสอบ
+    }, [lessonIndex, contentIndex, isInvalidParam]);
+
     useEffect(() => {
+        if (isInvalidParam) return;
         if (timerRunning) {
             const timer = setInterval(() => {
                 setTimeLeft((prev) => {
@@ -158,14 +179,15 @@ const ScienceQuiz = () => {
                     } else {
                         clearInterval(timer);
                         setIsTimeUp(true);
-                        handleSubmit(); // หมดเวลาให้ส่งคำตอบทันที
+                        handleSubmit();
                         return 0;
                     }
                 });
             }, 1000);
             return () => clearInterval(timer);
         }
-    }, [timerRunning]);
+    // eslint-disable-next-line
+    }, [timerRunning, isInvalidParam]);
 
     // ฟังก์ชันเปลี่ยนคำตอบที่เลือก
     const handleAnswerChange = (option) => {
@@ -189,7 +211,7 @@ const ScienceQuiz = () => {
     };
 
     // ฟังก์ชันตรวจสอบคำตอบและคำนวณคะแนน
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setTimerRunning(false); // หยุดจับเวลา
         let newScore = 0;
         let newWrongAnswers = [];
@@ -207,6 +229,33 @@ const ScienceQuiz = () => {
         });
         setScore(newScore);
         setWrongAnswers(newWrongAnswers);
+
+        const SubjectID = lessonIndex + 1;
+
+        try {
+                    await fetch('http://localhost:3001/api/exams/exam', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            SubjectID: 2,
+                            examscore: newScore,
+                            testat: new Date().toISOString().slice(0, 10),
+                            UserID: user.UserID,  // ต้องมีการเก็บรหัสผู้ใช้
+                            lesson_ID: lessonFromDB ? lessonFromDB.lesson_ID : null,
+                        }),
+                    });
+  } catch (error) {
+    console.error('บันทึกผลสอบล้มเหลว', error);
+  }
+        // บันทึกคะแนนลง localStorage ตาม userId
+    if (user.UserID) {
+        const allScores = JSON.parse(localStorage.getItem("SciScores")) || {};
+        const userScores = allScores[user.UserID] || {};
+        const key = `${lessonIndex}-${contentIndex}`;
+        userScores[key] = newScore;
+        allScores[user.UserID] = userScores;
+        localStorage.setItem("SciScores", JSON.stringify(allScores));
+    }
     };
 
     // ฟังก์ชันเริ่มต้นแบบทดสอบใหม่
@@ -223,66 +272,84 @@ const ScienceQuiz = () => {
         setShuffledQuestions(shuffled);
     };
 
+    // ย้าย return JSX มาตรงนี้
+    if (isInvalidParam) {
+        return <p>ไม่พบข้อมูลบทเรียนหรือเนื้อหา</p>;
+    }
+
     return (
-        <div className="quiz-container">
-            <h2>แบบทดสอบวิชาวิทยาศาสตร์</h2>
-            <h3>บทที่ {lessonIndex + 1} - เนื้อหาส่วนที่ {contentIndex + 1}</h3>
-            <h3>เวลาที่เหลือ: {timeLeft} วินาที</h3>
+        <div className={styles.sciQuizLayout}>
+            <div className={styles.sciQuizBgRight}></div>
+            <div className={styles.sciQuizMain}>
+                <h2>แบบทดสอบวิชาวิทยาศาสตร์</h2>
+                <p className={styles.sciQuizSubtitle}>บทที่ {lessonIndex + 1} - เนื้อหาส่วนที่ {contentIndex + 1}</p>
+                <p className={styles.sciQuizTimer}>เวลาที่เหลือ: {timeLeft} วินาที</p>
 
-            <div className="question">
-                <p>{currentQuestionIndex + 1}. {shuffledQuestions[currentQuestionIndex]?.question || ""}</p>
-                <div className="options">
-                    {shuffledQuestions[currentQuestionIndex]?.options?.map((option) => (
-                        <button
-                            key={option}
-                            className={`option ${answers[currentQuestionIndex] === option ? "selected" : ""}`}
-                            onClick={() => handleAnswerChange(option)}
-                        >
-                            {option}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            <div className="buttons">
-    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
-    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
-        <button
-            onClick={handleNext}
-            disabled={answers[currentQuestionIndex] === null} 
-        >
-            ถัดไป
-        </button>
-    ) : (
-        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
-    )}
-</div>
-
-            {score !== null && (
-                <div className="result">
-                    <h3 className="score">คะแนนของคุณ: {score} / {shuffledQuestions.length}</h3>
-                    {isTimeUp && <p className="time-up">⏳ หมดเวลาแล้ว!</p>}
-
-                    <div className="wrong-answers">
-                        {wrongAnswers.length > 0 && (
-                            <>
-                                <h4>คำตอบที่ผิด:</h4>
-                                <ul>
-                                    {wrongAnswers.map((item, index) => (
-                                        <li key={index}>
-                                            <p><strong>คำถาม:</strong> {item.question}</p>
-                                            <p><strong>✅ คำตอบที่ถูกต้อง:</strong> {item.correctAnswer}</p>
-                                            <p><strong>❌ คำตอบที่เลือก:</strong> {item.selectedAnswer}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
+                <div className={styles.sciQuizQuestion}>
+                    <h3>{currentQuestionIndex + 1}. {shuffledQuestions[currentQuestionIndex]?.question || ""}</h3>
+                    <div className={styles.sciQuizOptions}>
+                        {shuffledQuestions[currentQuestionIndex]?.options?.map((option) => (
+                            <button
+                                key={option}
+                                className={`${styles.sciQuizOption} ${answers[currentQuestionIndex] === option ? styles.selected : ""}`}
+                                onClick={() => handleAnswerChange(option)}
+                            >
+                                {option}
+                            </button>
+                        ))}
                     </div>
-
-                    <button onClick={handleRestart} className="restart">เริ่มใหม่</button>
                 </div>
-            )}
+
+                <div className={styles.sciQuizButtons}>
+                    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
+                    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
+                        <button
+                            onClick={handleNext}
+                            disabled={answers[currentQuestionIndex] === null}
+                        >
+                            ถัดไป
+                        </button>
+                    ) : (
+                        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
+                    )}
+                </div>
+
+                {score !== null && (
+                    <div className={styles.sciQuizResult}>
+                        <h3>คะแนนของคุณ: {score} / {shuffledQuestions.length}</h3>
+                        {isTimeUp && <p>⏳ หมดเวลาแล้ว!</p>}
+
+                        <div className={styles.sciQuizWrong}>
+                            {wrongAnswers.length > 0 && (
+                                <>
+                                    <h4>คำตอบที่ผิด:</h4>
+                                    <ul>
+                                        {wrongAnswers.map((item, index) => (
+                                            <li key={index}>
+                                                <p><strong>คำถาม:</strong> {item.question}</p>
+                                                <p><strong>✅ คำตอบที่ถูกต้อง:</strong> {item.correctAnswer}</p>
+                                                <p><strong>❌ คำตอบที่เลือก:</strong> {item.selectedAnswer}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
+                        </div>
+                        <div className={styles.sciQuizButtons}>
+                            <button onClick={() => navigate("/science", {
+                                state: {
+                                    lessonIndex,
+                                    contentIndex,
+                                    score
+                                }
+                            })}>
+                                กลับหน้าวิชา
+                            </button>
+                            <button onClick={handleRestart}>เริ่มใหม่</button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

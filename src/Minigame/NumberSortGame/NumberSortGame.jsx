@@ -16,7 +16,7 @@ const NumberSortGame = () => {
   }
 
   const handleSort = () => {
-    if (JSON.stringify(numbers) === JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) {
+    if (JSON.stringify(numbers) === JSON.stringify([1, 2, 3, 4, 5, 6,])) {
       setMessage("🎉 คุณเรียงตัวเลขถูกต้อง! 🎉");
       setLockedNumbers([...numbers]); // ล็อกตัวเลขทั้งหมดเมื่อเรียงถูกต้อง
     } else {
@@ -25,13 +25,14 @@ const NumberSortGame = () => {
   };
 
   const handleShuffle = () => {
-    setNumbers(shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+    setNumbers(shuffleArray([1, 2, 3, 4, 5, 6,]));
     setMessage("");
     setLockedNumbers([]); // รีเซ็ตตัวเลขที่ล็อกไว้
   };
 
   return (
     <div className={styles.numberSortGameBackground}>
+      <div className={styles.numberSortGameBgMain}></div>
         <div className={styles.numberSortGameContainer}>
             <h1 className={styles.numberSortGameTitle}>🔢 เกมเรียงลำดับตัวเลข 🔢</h1>
                 <p className={styles.numberSortGameInstructions}>กดปุ่มตัวเลขตามลำดับจากน้อยไปมาก จากนั้นกด "ตรวจสอบ" เพื่อดูว่าถูกต้องหรือไม่!</p>

@@ -1,333 +1,398 @@
-@keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-  
-  
-  .userProfileContainer {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #ffffff, #bfe07d);
-    color: var(--text-light);
-    text-align: center;
-    padding: 20px;
-    min-height: 100vh;
-    animation: fadeIn 1s ease-out; /* เพิ่มการค่อย ๆ ปรากฏตัว */
-  }
-  
-  /* ✅ หัวข้อด้านบน */
-  .userProfileHeader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(#bfe07d, #4caf50);
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    z-index: 1000;
-  }
-  
-  /* ✅ ปุ่มย้อนกลับ */
-  .userProfileBackButton {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  /* ✅ โครงสร้างหลัก */
-  .userProfileMainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1200px;
-    min-height: 100vh;
-    margin: 0 auto;
-    gap: 20px;
-  }
-  
-  /* ✅ กล่องข้อมูล */
-  .userProfileInfoCard {
-    background: linear-gradient(#bfe07d, #72c975);
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 20px;
-    text-align: left;
-    animation: slideIn 0.5s ease-out; /* เพิ่มการเคลื่อนที่จากขวา */
-    border: 2px solid #000;
-  }
-  
-  /* ✅ แถบความคืบหน้า */
-  .userProfileProgressContainer {
-    margin-top: 15px;
-  }
-  
-  .userProfileProgressBar {
-    width: 100%;
-    background: #e9b408;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 15px;
-  }
-  
-  .userProfileProgress {
-    height: 100%;
-    width: 0%;
-    background-color: var(--progress-light);
-    transition: width 0.5s ease-in-out;
-  }
-  
-  /* ✅ ปุ่ม */
-  .userProfileButton {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 10px;
-  }
-  
-  .userProfileLogoutButton {
-    background-color: #f84848;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .userProfileEditButton {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .userProfileEditButton:hover {
-    background-color: #3c923f;
-    transform: scale(1.05); /* ขยายขนาดปุ่มเมื่อ hover */
-  }
-  
-  .userProfileViewScore {
-    background-color: #FF9800;
-    color: white;
-  }
-  
-  .userProfileViewScore:hover {
-    background-color: #F57C00;
-    transform: scale(1.05); /* ขยายขนาดปุ่มเมื่อ hover */
-  }
-  
-  .userProfileLogoutButton:active {
-    transform: scale(0.95); /* ลดขนาดเมื่อกด */
-  }
-  
-  .userProfileLogoutButton:hover {
-    background-color: #ff0000;
-    transform: scale(1.05); /* ขยายขนาดเมื่อ hover */
-  }
-  
-  .userProfileLogoutButton:active {
-    background-color: #d00000;
-    transform: scale(0.95); /* ลดขนาดเมื่อกด */
-  }
-  
-  /* ✅ ปุ่มสลับโหมด */
-  .userProfileToggleContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .userProfileToggleSwitch {
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 35px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .userProfileToggleSwitch input {
-    display: none;
-  }
-  
-  .userProfileSlider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .dayMode .userProfileSlider {
-    background: #f1f1f1;
-    color: #333;
-  }
-  
-  .nightMode .userProfileSlider {
-    background: #2c3e50;
-    color: white;
-  }
-  
-  .userProfileSliderText {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: black;
-    z-index: 2;
-  }
-  
-  /* ✅ ปุ่มอยู่ตรงกลาง */
-  .userProfileButtonContainer {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .userProfileSubjectProgressRow {
-    display: flex; /* ทำให้เรียงแนวนอน */
-    flex-wrap: nowrap; /* ไม่ให้มีการขึ้นบรรทัดใหม่ */
-    justify-content: center; /* จัดให้อยู่ตรงกลาง */
-    gap: 20px; /* กำหนดระยะห่างระหว่างแต่ละอัน */
-    overflow-x: auto; /* เพิ่ม Scroll แนวนอน ถ้ามีข้อมูลเยอะ */
-    padding: 10px 0;
-  }
-  
-  .userProfileCircularProgressContainer {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: spin 2s linear infinite; /* เพิ่มการหมุน */
-  }
-  
-  .userProfileSubjectProgressItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-  }
-  
-  :root {
-    --circular-path-color: #4caf50;
-    --circular-text-color: #333;
-    --circular-trail-color: #d6d6d6;
-  }
-  
-  .userProfileSubjectLabel {
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  /* การกำหนดพื้นหลังให้กับ Popup */
+/* Minimal Modern Profile Style */
+
+:root {
+  --main-bg: #f7fafc;
+  --main-accent: #2563eb;
+  --main-accent-dark: #1746a0;
+  --main-danger: #f84848;
+  --main-danger-dark: #d32f2f;
+  --main-warning: #fbbf24;
+  --main-warning-dark: #f59e42;
+  --main-text: #222;
+  --main-muted: #888;
+  --main-radius: 18px;
+  --main-shadow: 0 2px 16px 0 rgba(60,60,60,0.07);
+  --main-transition: all 0.18s cubic-bezier(.4,0,.2,1);
+  --main-font: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Layout */
+.userProfilePage {
+  font-family: var(--main-font);
+  background: url('./Account-amico.png') center/cover no-repeat;
+  color: var(--main-text);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-size: 1.15rem;
+  background-blend-mode: lighten;
+  background-color: rgba(255,255,255,0.85); /* เพิ่มความโปร่งใสของพื้นหลัง */
+}
+
+/* Header */
+.userProfileHeader {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  color: var(--main-text);
+  text-align: center;
+  padding: 18px 0 12px 0;
+  font-size: 2rem;       /* เพิ่มขนาด font Header ให้ใหญ่ขึ้น */
+  font-weight: 700;
+  box-shadow: var(--main-shadow);
+  border-radius: 0 0 var(--main-radius) var(--main-radius);
+  z-index: 100;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.userProfileBackButton {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--main-accent);
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+}
+.userProfileBackButton:hover {
+  color: var(--main-accent-dark);
+}
+
+.userProfileTitle {
+  font-size: 1.5rem;     /* เพิ่มขนาด font Title ให้ใหญ่ขึ้น */
+  font-weight: 700;
+  color: var(--main-accent);
+  margin: 0;
+}
+
+/* Main Content */
+.userProfileMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;    /* ขยายจาก 520px เป็น 900px */
+  margin: 48px auto 0 auto;
+  gap: 36px;           /* เพิ่มช่องว่าง */
+}
+
+/* Grid สำหรับสองฝั่ง */
+.userProfileContainerGrid {
+  display: flex;
+  gap: 48px;           /* เพิ่มช่องว่างระหว่างซ้าย-ขวา */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* ฝั่งซ้าย */
+.userProfileLeft {
+  background: #fff;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  padding: 40px 28px;
+  min-width: 260px;    /* ขยายจาก 210px */
+  max-width: 320px;    /* ขยายจาก 240px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ปุ่มในฝั่งซ้าย */
+.userProfileLeftActions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* ฝั่งขวา */
+.userProfileRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* ขยาย card และ section */
+.userProfileCard,
+.userProfileStatsSection,
+.userProfileActions {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Card */
+.userProfileCard {
+  background: #fff;
+  border-radius: var(--main-radius);
+  padding: 32px 28px 24px 28px;
+  box-shadow: var(--main-shadow);
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  animation: fadeIn 0.7s;
+}
+
+.userProfileAvatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.userProfileAvatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--main-accent);
+  background: #f3f4f6;
+  margin-bottom: 8px;
+}
+
+.userProfileProgressCircle {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.userProfileInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.userProfileName {
+  font-size: 1.35rem;    /* เพิ่มขนาด font Name ให้ใหญ่ขึ้น */
+  font-weight: 600;
+  color: var(--main-accent);
+  margin-bottom: 4px;
+}
+
+.userProfileDetailList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1.13rem;    /* เพิ่มขนาด font รายละเอียดให้ใหญ่ขึ้น */
+  color: var(--main-text);
+}
+
+.userProfileStatusRow {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userProfileStatusLabel {
+  color: var(--main-muted);
+  font-size: 1.13rem;    /* เพิ่มขนาด font Status Label ให้ใหญ่ขึ้น */
+}
+
+.userProfileStatus {
+  font-weight: 500;
+  color: var(--main-accent);
+  font-size: 1.13rem;    /* เพิ่มขนาด font Status ให้ใหญ่ขึ้น */
+}
+
+/* Stats Section */
+.userProfileStatsSection {
+  background: #fff;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  padding: 24px 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.userProfileStatsTitle {
+  font-size: 1.18rem;    /* เพิ่มขนาด font Stats Title ให้ใหญ่ขึ้น */
+  font-weight: 600;
+  color: var(--main-accent);
+  margin-bottom: 10px;
+}
+
+.userProfileSubjectProgressRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.userProfileSubjectProgressItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90px;
+  gap: 6px;
+}
+.userProfileSubjectLabel {
+  font-size: 1.08rem;    /* เพิ่มขนาด font Subject Label ให้ใหญ่ขึ้น */
+  color: var(--main-muted);
+  margin-top: 2px;
+}
+
+/* Actions */
+.userProfileActions {
+  background: #fff;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  padding: 18px 20px 18px 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.userProfileEditButton,
+.userProfileLogoutButton {
+  display: inline-block;
+  padding: 10px 22px;
+  font-size: 1.13rem;    /* เพิ่มขนาด font ปุ่มให้ใหญ่ขึ้น */
+  font-weight: 500;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: var(--main-transition);
+  margin: 0 6px;
+  background: var(--main-accent);
+  color: #fff;
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.04);
+}
+
+.userProfileEditButton:hover {
+  background: var(--main-accent-dark);
+}
+
+.userProfileLogoutButton {
+  background: var(--main-danger);
+}
+.userProfileLogoutButton:hover {
+  background: var(--main-danger-dark);
+  transform: translateY(-2px) scale(1.04);
+}
+.userProfileLogoutButton:active {
+  background: #b71c1c;
+  transform: scale(0.97);
+}
+
+/* Popup */
 .userProfileLogoutPopup {
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.32);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeInPopup 0.3s;
+}
+.userProfilePopupContent {
+  background: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--main-shadow);
+  min-width: 260px;
+}
+.userProfileConfirmButton,
+.userProfileCancelButton {
+  margin: 10px 8px 0 8px;
+  padding: 10px 24px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--main-transition);
+}
+.userProfileConfirmButton {
+  background: var(--main-accent);
+  color: #fff;
+}
+.userProfileConfirmButton:hover {
+  background: var(--main-accent-dark);
+}
+.userProfileCancelButton {
+  background: var(--main-danger);
+  color: #fff;
+}
+.userProfileCancelButton:hover {
+  background: var(--main-danger-dark);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(24px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInPopup {
+  0% { opacity: 0; transform: scale(0.95);}
+  100% { opacity: 1; transform: scale(1);}
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .userProfileMain,
+  .userProfileContainerGrid {
+    max-width: 98vw;
+  }
+  .userProfileContainerGrid {
+    gap: 24px;
+  }
+  .userProfileLeft {
+    min-width: 180px;
+    max-width: 100vw;
+    padding: 28px 10vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .userProfileMain {
+    max-width: 98vw;
+    margin: 24px auto 0 auto;
+    gap: 18px;
+  }
+  .userProfileContainerGrid {
+    flex-direction: column;
+    gap: 18px;
+    max-width: 98vw;
+  }
+  .userProfileLeft, .userProfileRight {
+    max-width: 100%;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeInPopup 0.5s ease-out;
+    padding: 24px 6vw;
   }
-  
-  @keyframes fadeInPopup {
-    0% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .userProfileHeader {
+    font-size: 1.3rem;    /* ปรับขนาด font Header สำหรับหน้าจอเล็กลง */
   }
-  
-  .userProfilePopupContent {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  .userProfileTitle {
+    font-size: 1.1rem;    /* ปรับขนาด font Title สำหรับหน้าจอเล็กลง */
   }
-  
-  /* ปุ่มใน Popup */
-  .userProfileConfirmButton,
-  .userProfileCancelButton {
-    margin: 10px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
+  .userProfileName {
+    font-size: 1.08rem;    /* ปรับขนาด font Name สำหรับหน้าจอเล็กลง */
   }
-  
-  .userProfileConfirmButton {
-    background-color: #4caf50;
-    color: white;
+  .userProfileDetailList {
+    font-size: 1rem;    /* ปรับขนาด font รายละเอียด สำหรับหน้าจอเล็กลง */
   }
-  
-  .userProfileCancelButton {
-    background-color: #f84848;
-    color: white;
-  }
-  
-  /* การ hover ของปุ่ม */
-  .userProfileConfirmButton:hover {
-    background-color: #45a049;
-  }
-  
-  .userProfileCancelButton:hover {
-    background-color: #ff0400;
-  }
-  
+}

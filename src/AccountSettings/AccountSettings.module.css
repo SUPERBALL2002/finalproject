@@ -1,173 +1,236 @@
+/* Minimal, modern, clean account settings style */
+
+:root {
+  --main-bg: #f7fafc;
+  --main-accent: #4caf50;
+  --main-accent-dark: #388e3c;
+  --main-danger: #f84848;
+  --main-text: #222;
+  --main-muted: #888;
+  --main-radius: 18px;
+  --main-shadow: 0 2px 16px 0 rgba(60,60,60,0.07);
+  --main-transition: all 0.18s cubic-bezier(.4,0,.2,1);
+  --main-font: 'Poppins', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Wrapper */
+.accountSettingsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--main-bg);
+}
+
+/* Header */
 .accountSettingsHeader {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: linear-gradient(to right, #7db4f3, #0074f8);
-    color: white;
-    padding: 10px 0;
-    font-size: 20px;
-    font-weight: bold;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.accountSettingsContainer {
-    width: 50%;
-    max-width: 500px;
-    padding: 10px;
-    background: linear-gradient(#7fb0fa, #97c3f1);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 40px;
-    min-height: 300px; /* เพิ่มความสูงขั้นต่ำ */
-    overflow-y: auto; /* กำหนดการเลื่อนแนวตั้งถ้าหากเนื้อหามีมาก */
-}
-
-.accountSettingsContainer h2 {
-    text-align: center;
-}
-
-.accountSettingsLabel {
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-}
-
-.accountSettingsInput {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.accountSettingsSaveButton {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.accountSettingsSaveButton:hover {
-    background-color: #0056b3;
-}
-
-.accountSettingsCheckboxContainer {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.accountSettingsCheckboxContainer input {
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-}
-
-.accountSettingsCheckboxContainer label {
-    font-size: 16px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  color: var(--main-text);
+  padding: 18px 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: var(--main-shadow);
+  border-radius: 0 0 var(--main-radius) var(--main-radius);
+  letter-spacing: 1px;
 }
 
 .accountSettingsBackButton {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    margin-left: 15px;
-    margin-right: 10px;
+  background: none;
+  border: none;
+  color: var(--main-accent);
+  font-size: 1.7rem;
+  cursor: pointer;
+  margin-left: 15px;
+  margin-right: 10px;
+  transition: color 0.2s;
+}
+.accountSettingsBackButton:hover {
+  color: var(--main-accent-dark);
 }
 
 h1 {
-    margin: 0;
-    flex-grow: 1;
-    text-align: center;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--main-text);
 }
 
-/* ✅ อัปโหลดรูปโปรไฟล์ */
-.accountSettingsProfileUpload {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
+/* Container */
+.accountSettingsContainer {
+  width: 100%;
+  max-width: 410px;
+  padding: 32px 28px 24px 28px;
+  background: #fff;
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  margin-top: 80px;
+  min-height: 340px;
+  overflow-y: auto;
+  animation: fadeIn 0.7s;
 }
 
-.accountSettingsProfileUpload img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid white;
-    object-fit: cover;
+.accountSettingsContainer h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--main-accent);
+  margin-bottom: 18px;
 }
 
-.accountSettingsUploadLabel {
-    display: block;
-    background-color: #e94310;
-    color: white;
-    padding: 8px;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-/* ✅ ปรับแต่งฟอร์ม */
+/* Form */
 .accountSettingsForm {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.accountSettingsWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(#ccc,#007BFF);
+.accountSettingsLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--main-muted);
+  margin-top: 10px;
+  margin-bottom: 2px;
+  display: block;
 }
 
+.accountSettingsInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #f8fafb;
+  color: var(--main-text);
+  transition: border 0.2s;
+  outline: none;
+}
+.accountSettingsInput:focus {
+  border: 1.5px solid var(--main-accent);
+  background: #fff;
+}
+
+/* Checkbox */
+.accountSettingsCheckboxContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+.accountSettingsCheckboxContainer input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--main-accent);
+}
+.accountSettingsCheckboxContainer label {
+  font-size: 1rem;
+  color: var(--main-muted);
+}
+
+/* Save Button */
+.accountSettingsSaveButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--main-accent);
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--main-transition);
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.04);
+}
+.accountSettingsSaveButton:hover {
+  background: var(--main-accent-dark);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Profile Upload */
+.accountSettingsProfileUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 8px;
+}
+.accountSettingsProfileUpload img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2.5px solid var(--main-accent);
+  object-fit: cover;
+  background: #f8fafb;
+}
+.accountSettingsUploadLabel {
+  display: block;
+  background-color: var(--main-accent);
+  color: white;
+  padding: 7px 18px;
+  border-radius: 7px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 0.98rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.accountSettingsUploadLabel:hover {
+  background: var(--main-accent-dark);
+}
+input[type="file"] {
+  display: none;
+}
+
+/* Popup */
 .popupBackground {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.32);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeInPopup 0.3s;
 }
-
 .popupContainer {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 28px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--main-shadow);
+  min-width: 240px;
 }
-
 .popupButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 24px;
+  background: var(--main-accent);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--main-transition);
+}
+.popupButton:hover {
+  background: var(--main-accent-dark);
 }
 
-.popupButton:hover {
-    background: #0056b3;
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(24px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInPopup {
+  0% { opacity: 0; transform: scale(0.95);}
+  100% { opacity: 1; transform: scale(1);}
 }

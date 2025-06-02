@@ -12,6 +12,10 @@ const Register = () => {
     month: "",
     year: "",
     age: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    phoneNumber: "",
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -30,16 +34,19 @@ const Register = () => {
       const birthDate = new Date(formData.year, formData.month - 1, formData.day);
       const today = new Date();
       let calculatedAge = today.getFullYear() - birthDate.getFullYear();
-      
-      if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
+
+      if (
+        today <
+        new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())
+      ) {
         calculatedAge--;
       }
-      
+
       setFormData((prev) => ({ ...prev, age: calculatedAge }));
     }
   }, [formData.day, formData.month, formData.year]);
 
-  const validateAndSubmit = (event) => {
+  const validateAndSubmit = async (event) => {
     event.preventDefault();
 
     if (formData.age > 12) {
@@ -52,8 +59,39 @@ const Register = () => {
       return;
     }
 
-    alert("✅ สมัครสมาชิกสำเร็จ!");
-    navigate("/login");
+    const userData = {
+      Username: formData.username,
+      Password: formData.password,
+      FirstName: formData.firstName,
+      Lastname: formData.lastName,
+      Address: formData.address,
+      date_of_birth: `${formData.year}-${formData.month
+        .toString()
+        .padStart(2, "0")}-${formData.day.toString().padStart(2, "0")}`,
+      email: formData.email,
+      phone_number: formData.phoneNumber,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3001/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ สมัครสมาชิกสำเร็จ!");
+        navigate("/login");
+      } else {
+        alert(`❌ สมัครสมาชิกไม่สำเร็จ: ${data.message || "เกิดข้อผิดพลาด"}`);
+      }
+    } catch (error) {
+      alert(`❌ เกิดข้อผิดพลาด: ${error.message}`);
+    }
   };
 
   return (
@@ -70,7 +108,30 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          
+          <input
+            className={styles.registerInput}
+            type="text"
+            name="firstName"
+            placeholder="ชื่อจริง"
+            value={formData.firstName}
+            onChange={handleChange}
+          />
+          <input
+            className={styles.registerInput}
+            type="text"
+            name="lastName"
+            placeholder="นามสกุล"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
+          <input
+            className={styles.registerInput}
+            type="text"
+            name="address"
+            placeholder="ที่อยู่"
+            value={formData.address}
+            onChange={handleChange}
+          />
           <input
             className={styles.registerInput}
             type="email"
@@ -106,29 +167,65 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <span className={styles.registerEyeIcon} onClick={toggleConfirmPassword}>
+            <span
+              className={styles.registerEyeIcon}
+              onClick={toggleConfirmPassword}
+            >
               {confirmPasswordVisible ? "🙈" : "👁️"}
             </span>
           </div>
 
           <div className={styles.registerDobContainer}>
-            <select name="day" value={formData.day} onChange={handleChange} required>
+            <select
+              name="day"
+              value={formData.day}
+              onChange={handleChange}
+              required
+            >
               <option value="">วัน</option>
               {[...Array(31)].map((_, i) => (
-                <option key={i} value={i + 1}>{i + 1}</option>
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
               ))}
             </select>
-            <select name="month" value={formData.month} onChange={handleChange} required>
+            <select
+              name="month"
+              value={formData.month}
+              onChange={handleChange}
+              required
+            >
               <option value="">เดือน</option>
-              {["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-                "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"].map((month, index) => (
-                <option key={index} value={index + 1}>{month}</option>
+              {[
+                "มกราคม",
+                "กุมภาพันธ์",
+                "มีนาคม",
+                "เมษายน",
+                "พฤษภาคม",
+                "มิถุนายน",
+                "กรกฎาคม",
+                "สิงหาคม",
+                "กันยายน",
+                "ตุลาคม",
+                "พฤศจิกายน",
+                "ธันวาคม",
+              ].map((month, index) => (
+                <option key={index} value={index + 1}>
+                  {month}
+                </option>
               ))}
             </select>
-            <select name="year" value={formData.year} onChange={handleChange} required>
+            <select
+              name="year"
+              value={formData.year}
+              onChange={handleChange}
+              required
+            >
               <option value="">ปี</option>
               {[...Array(new Date().getFullYear() - 1899)].map((_, i) => (
-                <option key={i} value={new Date().getFullYear() - i}>{new Date().getFullYear() - i}</option>
+                <option key={i} value={new Date().getFullYear() - i}>
+                  {new Date().getFullYear() - i}
+                </option>
               ))}
             </select>
           </div>
@@ -142,11 +239,22 @@ const Register = () => {
             readOnly
           />
 
+          <input
+            className={styles.registerInput}
+            type="text"
+            name="phoneNumber"
+            placeholder="เบอร์โทรศัพท์"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+          />
+
           <button type="submit" className={styles.registerBtn}>
             สมัครสมาชิก
           </button>
 
-          <p>มีบัญชีอยู่แล้ว? <a href="/login">เข้าสู่ระบบ</a></p>
+          <p>
+            มีบัญชีอยู่แล้ว? <a href="/login">เข้าสู่ระบบ</a>
+          </p>
         </form>
       </div>
     </div>

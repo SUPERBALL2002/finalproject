@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import "./Quiz.css";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import styles from "./ThaiLanguageQuiz.module.css";
 
 const thaiQuestions = {
     0: {
@@ -124,165 +124,233 @@ const shuffleArray = (array) => {
 };
 
 const ThaiQuiz = () => {
-        const [searchParams] = useSearchParams();
-        const lessonIndex = parseInt(searchParams.get("lesson"), 10);
-        const contentIndex = parseInt(searchParams.get("content"), 10);
-        
-        // สร้าง state ต่าง ๆ สำหรับการจัดการข้อมูล
-        const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-        const [answers, setAnswers] = useState([]);
-        const [score, setScore] = useState(null);
-        const [shuffledQuestions, setShuffledQuestions] = useState([]);
-        const [timeLeft, setTimeLeft] = useState(60);
-        const [isTimeUp, setIsTimeUp] = useState(false);
-        const [wrongAnswers, setWrongAnswers] = useState([]);
-        const [timerRunning, setTimerRunning] = useState(true);
+    const [searchParams] = useSearchParams();
+    const lessonIndex = parseInt(searchParams.get("lesson"), 10);
+    const contentIndex = parseInt(searchParams.get("content"), 10);
+    const [lessonFromDB, setLessonFromDB] = useState(null);
+
+    // Hooks
+    const navigate = useNavigate();
+    const user = { UserID: localStorage.getItem("userId") };
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [answers, setAnswers] = useState([]);
+    const [score, setScore] = useState(null);
+    const [shuffledQuestions, setShuffledQuestions] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(60);
+    const [isTimeUp, setIsTimeUp] = useState(false);
+    const [wrongAnswers, setWrongAnswers] = useState([]);
+    const [timerRunning, setTimerRunning] = useState(true);
+
+    // ตรวจสอบ param หลังจากเรียก Hook แล้ว
+    const isInvalidParam = isNaN(lessonIndex) || isNaN(contentIndex);
 
     useEffect(() => {
-            if (thaiQuestions[lessonIndex]?.[contentIndex]) {
-                setShuffledQuestions(shuffleArray([...thaiQuestions[lessonIndex][contentIndex]]));
-                setAnswers(Array(10).fill(null));
+        if (isInvalidParam) return;
+        async function fetchLesson() {
+            try {
+                const res = await fetch(`http://localhost:3001/api/lessons/${lessonIndex + 1}`);
+                if (!res.ok) throw new Error('ไม่พบข้อมูลบทเรียน');
+                const data = await res.json();
+                setLessonFromDB(data);
+            } catch (error) {
+                console.error('โหลดบทเรียนล้มเหลว', error);
+                setLessonFromDB(null);
             }
-        }, [lessonIndex, contentIndex]);
+        }
+        fetchLesson();
+    }, [lessonIndex, isInvalidParam]);
+
+    useEffect(() => {
+        if (isInvalidParam) return;
+        if (thaiQuestions[lessonIndex]?.[contentIndex]) {
+            setShuffledQuestions(shuffleArray([...thaiQuestions[lessonIndex][contentIndex]]));
+            setAnswers(Array(10).fill(null));
+        }
+    }, [lessonIndex, contentIndex, isInvalidParam]);
+
+    useEffect(() => {
+        if (isInvalidParam) return;
+        if (timerRunning) {
+            const timer = setInterval(() => {
+                setTimeLeft((prev) => {
+                    if (prev > 0) {
+                        return prev - 1;
+                    } else {
+                        clearInterval(timer);
+                        setIsTimeUp(true);
+                        handleSubmit();
+                        return 0;
+                    }
+                });
+            }, 1000);
+            return () => clearInterval(timer);
+        }
+    }, [timerRunning, isInvalidParam]);
+
+    // ฟังก์ชันเปลี่ยนคำตอบที่เลือก
+    const handleAnswerChange = (option) => {
+        const newAnswers = [...answers];
+        newAnswers[currentQuestionIndex] = option;
+        setAnswers(newAnswers);
+    };
+
+    // ฟังก์ชันไปยังคำถามถัดไป
+    const handleNext = () => {
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        }
+    };
+
+    // ฟังก์ชันย้อนกลับไปยังคำถามก่อนหน้า
+    const handlePrev = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+        }
+    };
+
+    // ฟังก์ชันตรวจสอบคำตอบและคำนวณคะแนน
+    const handleSubmit = async () => {
+        setTimerRunning(false); // หยุดจับเวลา
+        let newScore = 0;
+        let newWrongAnswers = [];
+
+        shuffledQuestions.forEach((q, index) => {
+            if (answers[index] === q.answer) {
+                newScore += 1;
+            } else {
+                newWrongAnswers.push({
+                    question: q.question,
+                    correctAnswer: q.answer,
+                    selectedAnswer: answers[index] || "ไม่ได้ตอบ",
+                });
+            }
+        });
+        setScore(newScore);
+        setWrongAnswers(newWrongAnswers);
+
+        const SubjectID = lessonIndex + 1;
+
+        try {
+                await fetch('http://localhost:3001/api/exams/exam', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        SubjectID: 3,
+                        examscore: newScore,
+                        testat: new Date().toISOString().slice(0, 10),
+                        UserID: user.UserID,  // ต้องมีการเก็บรหัสผู้ใช้
+                        lesson_ID: lessonFromDB ? lessonFromDB.lesson_ID : null,
+                    }),
+                });
+    } catch (error) {
+      console.error('บันทึกผลสอบล้มเหลว', error);
+    }
+        // บันทึกคะแนนลง localStorage ตาม userId
+    if (user.UserID) {
+        const allScores = JSON.parse(localStorage.getItem("ThaiScores")) || {};
+        const userScores = allScores[user.UserID] || {};
+        const key = `${lessonIndex}-${contentIndex}`;
+        userScores[key] = newScore;
+        allScores[user.UserID] = userScores;
+        localStorage.setItem("ThaiScores", JSON.stringify(allScores));
+    }
+    };
+
+    // ฟังก์ชันเริ่มต้นแบบทดสอบใหม่
+    const handleRestart = () => {
+        setAnswers([]);
+        setScore(null);
+        setIsTimeUp(false);
+        setTimeLeft(60);
+        setCurrentQuestionIndex(0);
+        setWrongAnswers([]);
+        setTimerRunning(true);
         
-        // เริ่มจับเวลาถอยหลังเมื่อเริ่มทำแบบทดสอบ
-        useEffect(() => {
-            if (timerRunning) {
-                const timer = setInterval(() => {
-                    setTimeLeft((prev) => {
-                        if (prev > 0) {
-                            return prev - 1;
-                        } else {
-                            clearInterval(timer);
-                            setIsTimeUp(true);
-                            handleSubmit(); // หมดเวลาให้ส่งคำตอบทันที
-                            return 0;
-                        }
-                    });
-                }, 1000);
-                return () => clearInterval(timer);
-            }
-        }, [timerRunning]);
-    
-        // ฟังก์ชันเปลี่ยนคำตอบที่เลือก
-        const handleAnswerChange = (option) => {
-            const newAnswers = [...answers];
-            newAnswers[currentQuestionIndex] = option;
-            setAnswers(newAnswers);
-        };
-    
-        // ฟังก์ชันไปยังคำถามถัดไป
-        const handleNext = () => {
-            if (currentQuestionIndex < shuffledQuestions.length - 1) {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
-            }
-        };
-    
-        // ฟังก์ชันย้อนกลับไปยังคำถามก่อนหน้า
-        const handlePrev = () => {
-            if (currentQuestionIndex > 0) {
-                setCurrentQuestionIndex(currentQuestionIndex - 1);
-            }
-        };
-    
-        // ฟังก์ชันตรวจสอบคำตอบและคำนวณคะแนน
-        const handleSubmit = () => {
-            setTimerRunning(false); // หยุดจับเวลา
-            let newScore = 0;
-            let newWrongAnswers = [];
-    
-            shuffledQuestions.forEach((q, index) => {
-                if (answers[index] === q.answer) {
-                    newScore += 1;
-                } else {
-                    newWrongAnswers.push({
-                        question: q.question,
-                        correctAnswer: q.answer,
-                        selectedAnswer: answers[index] || "ไม่ได้ตอบ",
-                    });
-                }
-            });
-            setScore(newScore);
-            setWrongAnswers(newWrongAnswers);
-        };
-    
-        // ฟังก์ชันเริ่มต้นแบบทดสอบใหม่
-        const handleRestart = () => {
-            setAnswers([]);
-            setScore(null);
-            setIsTimeUp(false);
-            setTimeLeft(60);
-            setCurrentQuestionIndex(0);
-            setWrongAnswers([]);
-            setTimerRunning(true);
-            
-            const shuffled = shuffleArray([...thaiQuestions[lessonIndex][contentIndex]]);
-            setShuffledQuestions(shuffled);
-        };
+        const shuffled = shuffleArray([...thaiQuestions[lessonIndex][contentIndex]]);
+        setShuffledQuestions(shuffled);
+    };
+
+    // ย้าย return JSX มาตรงนี้
+    if (isInvalidParam) {
+        return <p>ไม่พบข้อมูลบทเรียนหรือเนื้อหา</p>;
+    }
 
     return (
-        <div className="quiz-container">
-            <h2>แบบทดสอบวิชาภาษาไทย</h2>
-            <h3>บทที่ {lessonIndex + 1} - เนื้อหาส่วนที่ {contentIndex + 1}</h3>
-            <h3>เวลาที่เหลือ: {timeLeft} วินาที</h3>
+        <div className={styles.thaiQuizLayout}>
+            <div className={styles.thaiQuizMain}>
+                <div className={styles.thaiQuizBgRight}></div>
+                <h2>แบบทดสอบวิชาภาษาไทย</h2>
+                <p className={styles.thaiQuizSubtitle}>บทที่ {lessonIndex + 1} - เนื้อหาส่วนที่ {contentIndex + 1}</p>
+                <p className={styles.thaiQuizTimer}>เวลาที่เหลือ: {timeLeft} วินาที</p>
 
-            {/* แสดงคำถามทีละข้อ */}
-            <div className="question">
-                <p>{currentQuestionIndex + 1}. {shuffledQuestions[currentQuestionIndex]?.question || ""}</p>
-                <div className="options">
-                    {shuffledQuestions[currentQuestionIndex]?.options?.map((option) => (
-                        <button
-                            key={option}
-                            className={`option ${answers[currentQuestionIndex] === option ? "selected" : ""}`}
-                            onClick={() => handleAnswerChange(option)}
-                        >
-                            {option}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* ปุ่มควบคุม */}
-            <div className="buttons">
-    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
-    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
-        <button
-            onClick={handleNext}
-            disabled={answers[currentQuestionIndex] === null} // ✅ ป้องกันไม่ให้ไปต่อถ้ายังไม่ตอบ
-        >
-            ถัดไป
-        </button>
-    ) : (
-        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
-    )}
-</div>
-
-            {/* แสดงคะแนนเมื่อทำครบทุกข้อ */}
-            {score !== null && (
-                <div className="result">
-                    <h3 className="score">คะแนนของคุณ: {score} / {shuffledQuestions.length}</h3>
-                    {isTimeUp && <p className="time-up">⏳ หมดเวลาแล้ว!</p>}
-
-                    <div className="wrong-answers">
-                        {wrongAnswers.length > 0 && (
-                            <>
-                                <h4>คำตอบที่ผิด:</h4>
-                                <ul>
-                                    {wrongAnswers.map((item, index) => (
-                                        <li key={index}>
-                                            <p><strong>คำถาม:</strong> {item.question}</p>
-                                            <p><strong>✅ คำตอบที่ถูกต้อง:</strong> {item.correctAnswer}</p>
-                                            <p><strong>❌ คำตอบที่เลือก:</strong> {item.selectedAnswer}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
+                {/* แสดงคำถามทีละข้อ */}
+                <div className={styles.thaiQuizQuestion}>
+                    <h3>{currentQuestionIndex + 1}. {shuffledQuestions[currentQuestionIndex]?.question || ""}</h3>
+                    <div className={styles.thaiQuizOptions}>
+                        {shuffledQuestions[currentQuestionIndex]?.options?.map((option) => (
+                            <button
+                                key={option}
+                                className={`${styles.thaiQuizOption} ${answers[currentQuestionIndex] === option ? styles.selected : ""}`}
+                                onClick={() => handleAnswerChange(option)}
+                            >
+                                {option}
+                            </button>
+                        ))}
                     </div>
-
-                    <button onClick={handleRestart} className="restart">เริ่มใหม่</button>
                 </div>
-            )}
+
+                {/* ปุ่มควบคุม */}
+                <div className={styles.thaiQuizButtons}>
+                    <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>ย้อนกลับ</button>
+                    {currentQuestionIndex < shuffledQuestions.length - 1 ? (
+                        <button
+                            onClick={handleNext}
+                            disabled={answers[currentQuestionIndex] === null}
+                        >
+                            ถัดไป
+                        </button>
+                    ) : (
+                        <button onClick={handleSubmit} disabled={isTimeUp}>ส่งคำตอบ</button>
+                    )}
+                </div>
+
+                {/* แสดงคะแนนเมื่อทำครบทุกข้อ */}
+                {score !== null && (
+                    <div className={styles.thaiQuizResult}>
+                        <h3>คะแนนของคุณ: {score} / {shuffledQuestions.length}</h3>
+                        {isTimeUp && <p>⏳ หมดเวลาแล้ว!</p>}
+
+                        <div className={styles.thaiQuizWrong}>
+                            {wrongAnswers.length > 0 && (
+                                <>
+                                    <h4>คำตอบที่ผิด:</h4>
+                                    <ul>
+                                        {wrongAnswers.map((item, index) => (
+                                            <li key={index}>
+                                                <p><strong>คำถาม:</strong> {item.question}</p>
+                                                <p><strong>✅ คำตอบที่ถูกต้อง:</strong> {item.correctAnswer}</p>
+                                                <p><strong>❌ คำตอบที่เลือก:</strong> {item.selectedAnswer}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
+                        </div>
+                        <div className={styles.thaiQuizButtons}>
+                            <button onClick={() => navigate("/thailanguage", {
+                                state: {
+                                    lessonIndex,
+                                    contentIndex,
+                                    score
+                                }
+                            })}>
+                                กลับหน้าวิชา
+                            </button>
+                            <button onClick={handleRestart}>เริ่มใหม่</button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

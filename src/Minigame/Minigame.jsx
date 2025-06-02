@@ -5,23 +5,46 @@ import styles from "./MiniGame.module.css";
 const MiniGameSelection = () => {
   const navigate = useNavigate();
 
+  const games = [
+    {
+      icon: "🃏",
+      label: "เกมจับคู่การ์ด",
+      path: "/memorygame",
+    },
+    {
+      icon: "🔢",
+      label: "เกมเรียงลำดับตัวเลข",
+      path: "/numbersortgame",
+    },
+    {
+      icon: "✊ ✌️ ✋",
+      label: "เกมเป่ายิ้งฉุบ",
+      path: "/rockpaperscissors",
+    },
+    {
+      icon: "🎯",
+      label: "เกม Number Target",
+      path: "/numbertarget",
+    },
+  ];
+
   return (
     <div className={styles.miniGameContainer}>
-      <h1 className={styles.miniGametitle}>🎮 เลือกเกมที่คุณต้องการเล่น 🎮</h1>
-      <div className={styles.miniGameGrid}> 
-        <button className={styles.gameButton} onClick={() => navigate("/memorygame")}>
-          🃏 เกมจับคู่การ์ด
-        </button>
-        <button className={styles.gameButton} onClick={() => navigate("/numbersortgame")}>
-          🔢 เกมเรียงลำดับตัวเลข 
-        </button>
-        <button className={styles.gameButton} onClick={() => navigate("/rockpaperscissors")}>
-          ✊ ✌️ ✋ เกมเป่ายิ้งฉุบ
-        </button>
-        <button className={styles.gameButton} onClick={() => navigate("/numbertarget")}>
-          🎯 เกม Number Target
-        </button>
-      </div>
+      <header className={styles.miniGameHeader}>
+        <h1 className={styles.miniGametitle}>🎮 เลือกเกมที่คุณต้องการเล่น 🎮</h1>
+      </header>
+      <main className={styles.miniGameGrid}>
+        {games.map((game) => (
+          <button
+            key={game.path}
+            className={styles.gameButton}
+            onClick={() => navigate(game.path)}
+          >
+            <span className={styles.gameIcon}>{game.icon}</span>
+            <span className={styles.gameLabel}>{game.label}</span>
+          </button>
+        ))}
+      </main>
     </div>
   );
 };
