@@ -1,8 +1,8 @@
-const express = require('express');
+ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./db');  // เชื่อมต่อกับฐานข้อมูล
-const userRoutes = require('./routes/users');
+const userRoutes = require('./routes/users');  
 const lessonRoutes = require('./routes/lessons');
 const subjectRoutes = require('./routes/subjects');
 const examRoutes = require('./routes/exams');
@@ -27,3 +27,4 @@ app.get('/api/protected', authenticateToken, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+// ประกาศใน routes 
