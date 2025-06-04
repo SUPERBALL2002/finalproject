@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./MathPage.module.css";
 
@@ -15,26 +15,27 @@ const MathPage = () => {
     { title: "บทที่ 3", contents: ["เนื้อหาส่วนที่ 1", "เนื้อหาส่วนที่ 2", "เนื้อหาส่วนที่ 3"] },
   ];
 
-  useEffect(() => {
-    const savedScores = JSON.parse(localStorage.getItem("mathScores")) || {};
-    setScores(savedScores);
-  }, []);
-  
+  // โหลดคะแนนของ userId ปัจจุบัน
   useEffect(() => {
     const allScores = JSON.parse(localStorage.getItem("mathScores")) || {};
     const userScores = allScores[userId] || {};
     setScores(userScores);
   }, [userId]);
-    
+
+  // ถ้า location.state มีการส่งคะแนนกลับมา ให้บันทึกคะแนนใหม่
   useEffect(() => {
     const { lessonIndex, contentIndex, score } = location.state || {};
     if (typeof score === "number") {
       const key = `${lessonIndex}-${contentIndex}`;
+
       setScores(prevScores => {
         const updatedScores = { ...prevScores, [key]: score };
+
+        // อัปเดตใน localStorage
         const allScores = JSON.parse(localStorage.getItem("mathScores")) || {};
         allScores[userId] = { ...(allScores[userId] || {}), ...updatedScores };
         localStorage.setItem("mathScores", JSON.stringify(allScores));
+
         return updatedScores;
       });
     }
@@ -52,7 +53,7 @@ const MathPage = () => {
 
   return (
     <div className={styles.mathpageContainer}>
-       <div className={styles.mathpageBgTopLeft}></div>
+      <div className={styles.mathpageBgTopLeft}></div>
       <div className={styles.mathpageBgBottomRight}></div>
       <div className={styles.mathpageHeader}>
         <span>คณิตศาสตร์</span>
@@ -61,7 +62,10 @@ const MathPage = () => {
 
       {lessons.map((lesson, lessonIndex) => (
         <div key={lessonIndex} className={styles.mathpageSection}>
-          <div className={styles.mathpageTitle} onClick={() => handleLessonClick(lessonIndex)}>
+          <div
+            className={styles.mathpageTitle}
+            onClick={() => handleLessonClick(lessonIndex)}
+          >
             {lesson.title}
           </div>
           {selectedLesson === lessonIndex && (
@@ -69,9 +73,15 @@ const MathPage = () => {
               {lesson.contents.map((content, contentIndex) => {
                 const key = `${lessonIndex}-${contentIndex}`;
                 return (
-                  <div key={contentIndex} className={styles.mathpageItem} onClick={() => handleContentClick(lessonIndex, contentIndex)}>
+                  <div
+                    key={contentIndex}
+                    className={styles.mathpageItem}
+                    onClick={() => handleContentClick(lessonIndex, contentIndex)}
+                  >
                     <span>{content}</span>
-                    <span className={styles.mathpageItemScore}>คะแนน {scores[key] || 0}/10</span>
+                    <span className={styles.mathpageItemScore}>
+                      คะแนน {scores[key] || 0}/10
+                    </span>
                   </div>
                 );
               })}

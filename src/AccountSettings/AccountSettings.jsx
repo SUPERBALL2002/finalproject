@@ -14,6 +14,8 @@ const AccountSettings = () => {
 
   const [formData, setFormData] = useState({
     username: "",
+    FirstName: "",
+    Lastname: "",
     email: "",
     phone: "",
     address: "",
@@ -23,7 +25,7 @@ const AccountSettings = () => {
 
   // ✅ ดึง userID จาก token
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("userToken");
     if (token) {
       const decoded = jwtDecode(token);
       setUserId(decoded.userID);
@@ -32,15 +34,18 @@ const AccountSettings = () => {
 
   // ✅ โหลดข้อมูลผู้ใช้จาก backend
   useEffect(() => {
+
     if (!userId) return;
 
     axios
       .get(`http://localhost:3001/api/users/${userId}`)
       .then((res) => {
-        const { Username, email, phone_number, Address, date_of_birth } = res.data;
+        const { Username, FirstName, Lastname,email, phone_number, Address, date_of_birth } = res.data;
         setFormData((prev) => ({
           ...prev,
           username: Username,
+          FirstName: FirstName || "",
+          Lastname: Lastname || "",
           email,
           phone: phone_number,
           address: Address,
@@ -83,6 +88,8 @@ const AccountSettings = () => {
   const validateForm = () => {
     let newErrors = {};
     if (!formData.username.trim()) newErrors.username = "⚠️ กรุณากรอกชื่อผู้ใช้";
+    if (!formData.FirstName.trim()) newErrors.FirstName = "⚠️ กรุณากรอกชื่อผู้ใช้";
+    if (!formData.Lastname.trim()) newErrors.Lastname = "⚠️ กรุณากรอกชื่อผู้ใช้";
     if (!formData.email.includes("@")) newErrors.email = "⚠️ อีเมลไม่ถูกต้อง";
     if (formData.phone.length !== 10) newErrors.phone = "⚠️ เบอร์โทรต้องมี 10 หลัก";
     if (formData.birthdate && new Date(formData.birthdate) > new Date())
@@ -101,6 +108,8 @@ const AccountSettings = () => {
     try {
       const updatedData = {
         Username: formData.username,
+        FirstName: formData.FirstName,
+        Lastname: formData.Lastname,
         email: formData.email,
         phone_number: formData.phone,
         Address: formData.address,
@@ -134,7 +143,7 @@ const AccountSettings = () => {
 
         <h2 className={styles.accountSettingsTitle}>การตั้งค่าผู้ใช้</h2>
         <div className={styles.accountSettingsProfileUpload}>
-          <img src={profileImage} alt="รูปโปรไฟล์" />
+          <img src={profileImage} alt="" />
           <input type="file" id="profileUpload" accept="image/*" onChange={handleImageUpload} />
           <label htmlFor="profileUpload" className={styles.accountSettingsUploadLabel}>
             📸 อัปโหลดรูปโปรไฟล์
@@ -145,6 +154,14 @@ const AccountSettings = () => {
           <label className={styles.accountSettingsLabel}>👤 ชื่อผู้ใช้ใหม่</label>
           <input className={styles.accountSettingsInput} type="text" name="username" value={formData.username} onChange={handleChange} />
           {errors.username && <span className={styles.errorText}>{errors.username}</span>}
+
+          <label className={styles.accountSettingsLabel}>👤 ชื่อ</label>
+          <input className={styles.accountSettingsInput} type="text" name="FirstName" value={formData.FirstName} onChange={handleChange} />
+          {errors.FirstName && <span className={styles.errorText}>{errors.FirstName}</span>}
+
+          <label className={styles.accountSettingsLabel}>👤 นามสกุล</label>
+          <input className={styles.accountSettingsInput} type="text" name="Lastname" value={formData.Lastname} onChange={handleChange} />
+          {errors.Lastname && <span className={styles.errorText}>{errors.Lastname}</span>}
 
           <label className={styles.accountSettingsLabel}>📧 อีเมลใหม่</label>
           <input className={styles.accountSettingsInput} type="email" name="email" value={formData.email} onChange={handleChange} />

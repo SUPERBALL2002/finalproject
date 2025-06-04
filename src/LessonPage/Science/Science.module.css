@@ -128,13 +128,16 @@
   outline: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border-left: 6px solid var(--main-accent);
   position: relative;
   overflow: hidden;
   gap: 12px;
   letter-spacing: 0.5px;
+  width: 500px;
+  
 }
+
 .sciencepageTitle:hover, .sciencepageTitle:focus {
   background: linear-gradient(90deg, #2563eb 80%, #60a5fa 100%);
   color: #fff;

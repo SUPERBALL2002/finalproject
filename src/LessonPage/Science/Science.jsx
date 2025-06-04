@@ -63,7 +63,8 @@ const SciPage = () => {
             {lessons.map((lesson, lessonIndex) => (
                 <div key={lessonIndex} className={styles.sciencepageSection}>
                     <div className={styles.sciencepageTitle} onClick={() => handleLessonClick(lessonIndex)}>
-                        {lesson.title}
+                        <p>{lesson.title}</p>
+                       
                     </div>
                     {selectedLesson === lessonIndex && (
                         <div className={`${styles.sciencepageItems} slide-down`}>

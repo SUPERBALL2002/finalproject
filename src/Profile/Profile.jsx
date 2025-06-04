@@ -68,7 +68,7 @@ const UserProfile = () => {
             {userData ? (
               <>
                 <h2 className={styles.userProfileName}>
-                  {userData.FirstName} {userData.LastName}
+                  {userData.FirstName} {userData.Lastname}
                 </h2>
                 <div className={styles.userProfileDetailList}>
                   <div><span>📧</span> {userData.email}</div>
