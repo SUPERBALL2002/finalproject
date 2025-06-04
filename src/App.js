@@ -38,7 +38,7 @@ function App() {
         <Route path="profile" element = {<Profile />} />
         <Route path="account-settings" element = {<AccountSettings />} />
         <Route path="score" element = {<Score />} />
-        <Route path="/reset-password" element = {<ResetPassword />} />
+        <Route path="reset-password" element = {<ResetPassword />} />
         <Route path="minigame" element = {<MiniGameSelection />} />
         <Route path="memorygame" element = {<MemoryGame />} />
         <Route path="numbersortgame" element = {<NumberSortGame />} />

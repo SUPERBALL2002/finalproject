@@ -67,8 +67,8 @@ const UserProfile = () => {
         <section className={styles.userProfileCard}>
           <div className={styles.userProfileAvatarSection}>
             <img
-              src="/avatar.png"
-              alt="avatar"
+              src={userData?.avatarUrl ? userData.avatarUrl : "./circle-user-regular.svg"}
+              alt="Avatar"
               className={styles.userProfileAvatar}
             />
             <div className={styles.userProfileProgressCircle}>

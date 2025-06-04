@@ -1,134 +1,100 @@
-import React, { useState } from "react";
-import styles from "./Resetpassword.module.css"; // import CSS module
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Resetpassword.module.css";
 
-const ResetPassword = () => {
+export default function ResetPassword() {
+  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [message, setMessage] = useState("");
+  const [countdown, setCountdown] = useState(5);
+  const navigate = useNavigate();
 
-  // ฟังก์ชันตรวจสอบความปลอดภัยของรหัสผ่าน
-  const validatePassword = (password) => {
-    const minLength = 8;
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return password.length >= minLength && regex.test(password);
-  };
+  useEffect(() => {
+    let timer;
+    if (message === "รีเซ็ตรหัสผ่านสำเร็จแล้ว!") {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [message]);
 
-  const toggleNewPasswordVisibility = () => {
-    setShowNewPassword(!showNewPassword);
-  };
+  useEffect(() => {
+    if (countdown === 0 && message === "รีเซ็ตรหัสผ่านสำเร็จแล้ว!") {
+      navigate("/login");
+    }
+  }, [countdown, message, navigate]);
 
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handlePasswordReset = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Clear previous error messages
-    setError("");
-  
-    if (!validatePassword(newPassword)) {
-      setError("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร ประกอบด้วยตัวเลข ตัวอักษร และสัญลักษณ์พิเศษ");
-      return;
-    }
-  
-    if (newPassword !== confirmPassword) {
-      setError("รหัสผ่านไม่ตรงกัน");
-      return;
-    }
-  
+
     try {
-      const response = await fetch("/api/reset-password", {
+      const response = await fetch("http://localhost:3001/api/users/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ newPassword }),
+        body: JSON.stringify({ email, newPassword }),
       });
-  
+
       const data = await response.json();
-      if (data.success) {
-        setSuccess(true);
+
+      if (response.ok) {
+        setMessage("รีเซ็ตรหัสผ่านสำเร็จแล้ว!");
+        setCountdown(5);
       } else {
-        setError(data.message || "บางสิ่งผิดพลาด");
+        setMessage(data.error || "เกิดข้อผิดพลาดบางอย่าง");
       }
-    } catch (err) {
-      setError("เกิดข้อผิดพลาด โปรดลองใหม่ภายหลัง");
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาด:", error);
+      setMessage("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
     }
   };
 
   return (
-    <div className={styles.resetpasswordcontainer}>
-      <div className={styles["reset-password-wrapper"]}>
-        <h2>เปลี่ยนรหัสผ่านใหม่</h2>
-        {success ? (
-          <div className={styles["reset-password-success"]}>
-            Password has been reset successfully!
+    <div className={styles.resetPasswordBg}>
+      <div className={styles.resetPasswordCard}>
+        <h2 className={styles.resetPasswordTitle}>รีเซ็ตรหัสผ่าน</h2>
+        <form onSubmit={handleSubmit} className={styles.resetPasswordForm}>
+          <div>
+            <label htmlFor="email" className={styles.resetPasswordLabel}>
+              อีเมล
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.resetPasswordInput}
+              required
+            />
           </div>
-        ) : (
-          <form onSubmit={handlePasswordReset}>
-            <div className={styles["reset-password-group"]}>
-              <label htmlFor="newPassword">New Password</label>
-              <div className={styles["password-input-container"]}>
-                <input
-                  type={showNewPassword ? "text" : "password"}
-                  id="newPassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                />
-                <button
-                  type="button"
-                  className={styles["toggle-password-btn"]}
-                  onClick={toggleNewPasswordVisibility}
-                >
-                  {showNewPassword ? "👁️" : "🙈"}
-                </button>
-              </div>
-            </div>
-
-            <div className={styles["reset-password-group"]}>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <div className={styles["password-input-container"]}>
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-                <button
-                  type="button"
-                  className={styles["toggle-password-btn"]}
-                  onClick={toggleConfirmPasswordVisibility}
-                >
-                  {showConfirmPassword ? "👁️" : "🙈"}
-                </button>
-              </div>
-            </div>
-
-              <p className={styles["password-guidelines"]}>
-                รหัสผ่านควรประกอบไปด้วย:
-                <ul>
-                  <li>ความยาวอย่างน้อย 8 ตัวอักษร</li>
-                  <li>ตัวอักษรใหญ่และตัวอักษรเล็ก</li>
-                  <li>ตัวเลขและสัญลักษณ์พิเศษ เช่น ! @ # $</li>
-                </ul>
-              </p>
-            
-
-            {error && <div className={styles["reset-password-error"]}>{error}</div>}
-            <button type="submit" className={styles["reset-password-btn"]}>
-              Reset Password
-            </button>
-          </form>
+          <div>
+            <label htmlFor="newPassword" className={styles.resetPasswordLabel}>
+              รหัสผ่านใหม่
+            </label>
+            <input
+              type="password"
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className={styles.resetPasswordInput}
+              required
+            />
+          </div>
+          <button type="submit" className={styles.resetPasswordBtn}>
+            รีเซ็ตรหัสผ่าน
+          </button>
+        </form>
+        {message && (
+          <p className={styles.resetPasswordMessage}>
+            {message}
+            {message === "รีเซ็ตรหัสผ่านสำเร็จแล้ว!" && (
+              <span> กำลังกลับไปหน้าเข้าสู่ระบบใน {countdown} วินาที...</span>
+            )}
+          </p>
         )}
       </div>
     </div>
   );
-};
-
-export default ResetPassword;
+}

@@ -109,92 +109,31 @@ router.post('/login', (req, res) => {
 });
 
 //resetpass
-router.post('/forgot-password', async (req, res) => {
-  const { email } = req.body;
-  try {
-    const [rows] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
-    if (rows.length === 0) {
-      return res.status(404).send('Email not found');
-    }
-
-    const token = crypto.randomBytes(20).toString('hex');
-    const expire = Date.now() + 3600000; // 1 ชั่วโมง
-
-    await db.query('UPDATE user SET reset_token = ?, reset_token_expire = ? WHERE email = ?', [token, expire, email]);
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-app-password',
-      },
-    });
-
-    const mailOptions = {
-      from: 'your-email@gmail.com',
-      to: email,
-      subject: 'Password Reset',
-      text: `Click to reset your password: http://localhost:3001/reset-password/${token}`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error(error);
-        res.status(500).send('Error sending email');
-      } else {
-        res.send('Check your email for reset link');
-      }
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
-});
-
-router.get('/reset-password/:token', async (req, res) => {
-  const { token } = req.params;
-  try {
-    const [rows] = await db.query(
-      'SELECT * FROM User WHERE ResetToken = ? AND ResetTokenExpire > ?',
-      [token, Date.now()]
-    );
-
-    if (rows.length === 0) {
-      return res.status(404).send('Invalid or expired token');
-    }
-
-    res.send(`<form method="POST" action="/reset-password">
-      <input type="hidden" name="token" value="${token}" />
-      <input type="password" name="password" required placeholder="New Password" />
-      <input type="submit" value="Reset Password" />
-    </form>`);
-  } catch (err) {
-    res.status(500).send('Server error');
-  }
-});
-
 router.post('/reset-password', async (req, res) => {
-  const { token, password } = req.body;
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+    return res.status(400).json({ message: 'กรุณาระบุ Email และรหัสผ่านใหม่' });
+  }
+
   try {
-    const [rows] = await db.query(
-      'SELECT * FROM User WHERE ResetToken = ? AND ResetTokenExpire > ?',
-      [token, Date.now()]
-    );
+    db.query('SELECT * FROM User WHERE email = ?', [email], async (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
 
-    if (rows.length === 0) {
-      return res.status(404).send('Invalid or expired token');
-    }
+      if (results.length === 0) {
+        return res.status(404).json({ message: 'ไม่พบผู้ใช้งานที่มีอีเมลนี้' });
+      }
 
-    const userId = rows[0].UserID;
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    await db.query(
-      'UPDATE User SET Password = ?, ResetToken = NULL, ResetTokenExpire = NULL WHERE UserID = ?',
-      [password, userId]
-    );
+      db.query('UPDATE User SET Password = ? WHERE email = ?', [hashedPassword, email], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
 
-    res.send('Password updated successfully');
-  } catch (err) {
-    res.status(500).send('Server error');
+        res.json({ message: 'รีเซ็ตรหัสผ่านสำเร็จ' });
+      });
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'เกิดข้อผิดพลาดของเซิร์ฟเวอร์', error });
   }
 });
 

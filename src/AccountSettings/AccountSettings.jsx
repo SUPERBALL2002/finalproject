@@ -17,7 +17,6 @@ const AccountSettings = () => {
     email: "",
     phone: "",
     address: "",
-    password: "",
     birthdate: "",
     notifyEmail: false,
   });
@@ -36,7 +35,7 @@ const AccountSettings = () => {
     if (!userId) return;
 
     axios
-      .get(`http://localhost:3001/user/${userId}`)
+      .get(`http://localhost:3001/api/users/${userId}`)
       .then((res) => {
         const { Username, email, phone_number, Address, date_of_birth } = res.data;
         setFormData((prev) => ({
@@ -86,7 +85,6 @@ const AccountSettings = () => {
     if (!formData.username.trim()) newErrors.username = "⚠️ กรุณากรอกชื่อผู้ใช้";
     if (!formData.email.includes("@")) newErrors.email = "⚠️ อีเมลไม่ถูกต้อง";
     if (formData.phone.length !== 10) newErrors.phone = "⚠️ เบอร์โทรต้องมี 10 หลัก";
-    if (formData.password && formData.password.length < 6) newErrors.password = "⚠️ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร";
     if (formData.birthdate && new Date(formData.birthdate) > new Date())
       newErrors.birthdate = "⚠️ วันเกิดต้องไม่เป็นอนาคต";
     setErrors(newErrors);
@@ -109,12 +107,7 @@ const AccountSettings = () => {
         date_of_birth: formData.birthdate,
       };
 
-      // เพิ่ม password หากมีการเปลี่ยน
-      if (formData.password) {
-        updatedData.password = formData.password;
-      }
-
-      await axios.put(`http://localhost:3001/user/${userId}`, updatedData, {
+      await axios.put(`http://localhost:3001/api/users/${userId}`, updatedData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -164,18 +157,9 @@ const AccountSettings = () => {
           <label className={styles.accountSettingsLabel}>🏡 ที่อยู่</label>
           <input className={styles.accountSettingsInput} type="text" name="address" value={formData.address} onChange={handleChange} />
 
-          <label className={styles.accountSettingsLabel}>🔒 รหัสผ่านใหม่</label>
-          <input className={styles.accountSettingsInput} type="password" name="password" value={formData.password} onChange={handleChange} />
-          {errors.password && <span className={styles.errorText}>{errors.password}</span>}
-
           <label className={styles.accountSettingsLabel}>🎂 วันเดือนปีเกิด</label>
           <input className={styles.accountSettingsInput} type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} />
           {errors.birthdate && <span className={styles.errorText}>{errors.birthdate}</span>}
-
-          <div className={styles.accountSettingsCheckboxContainer}>
-            <input type="checkbox" name="notifyEmail" checked={formData.notifyEmail} onChange={handleChange} />
-            <label>📩 รับการแจ้งเตือนผ่านอีเมล</label>
-          </div>
 
           <button type="submit" className={styles.accountSettingsSaveButton} disabled={loading}>
             {loading ? "⏳ กำลังบันทึก..." : "💾 บันทึกการเปลี่ยนแปลง"}

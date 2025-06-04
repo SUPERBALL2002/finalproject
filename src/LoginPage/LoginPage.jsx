@@ -64,7 +64,7 @@ const LoginPage = () => {
         <Link to="/register" className={styles.signupBtn}>
           สมัครสมาชิก
         </Link>
-        <Link to="/Forgotpassword" className={styles.forgotPasswordLink}>
+        <Link to="/reset-password" className={styles.forgotPasswordLink}>
           ลืมรหัสผ่าน?
         </Link>
       </div>
