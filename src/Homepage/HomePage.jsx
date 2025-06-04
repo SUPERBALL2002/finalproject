@@ -68,7 +68,7 @@ const HomePage = () => {
           <div className={styles.navLeft}></div>
           <div className={styles.navRight}>
             <div className={styles.profileSection} onClick={toggleSidebar}>
-              <img src="avatar.png" alt="Profile" className={styles.profileIcon} />
+              <img src="avatar.png" alt="" className={styles.profileIcon} />
               <span className={styles.profileName}> </span>
             </div>
           </div>

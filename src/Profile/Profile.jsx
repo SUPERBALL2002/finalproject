@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 const UserProfile = () => {
-  const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("⏳ กำลังโหลด...");
   const [showPopup, setShowPopup] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -48,12 +45,6 @@ const UserProfile = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let completedFields = 5;
-    let totalFields = 6;
-    setProgress((completedFields / totalFields) * 100);
-  }, []);
-
   return (
     <div className={styles.userProfilePage}>
       <header className={styles.userProfileHeader}>
@@ -68,21 +59,10 @@ const UserProfile = () => {
           <div className={styles.userProfileAvatarSection}>
             <img
               src={userData?.avatarUrl ? userData.avatarUrl : "./circle-user-regular.svg"}
-              alt="Avatar"
+              alt=""
               className={styles.userProfileAvatar}
             />
-            <div className={styles.userProfileProgressCircle}>
-              <CircularProgressbar
-                value={progress}
-                text={`${Math.round(progress)}%`}
-                styles={buildStyles({
-                  textSize: "16px",
-                  pathColor: "#2563eb",
-                  textColor: "#2563eb",
-                  trailColor: "#e5e7eb",
-                })}
-              />
-            </div>
+            {/* ลบวงกลมเปอร์เซ็นต์ออก */}
           </div>
           <div className={styles.userProfileInfo}>
             {userData ? (
@@ -111,17 +91,8 @@ const UserProfile = () => {
           <div className={styles.userProfileSubjectProgressRow}>
             {userData?.subject && Object.entries(userData.subject).map(([subject, percentage]) => (
               <div key={subject} className={styles.userProfileSubjectProgressItem}>
-                <CircularProgressbar
-                  value={percentage}
-                  text={`${percentage}%`}
-                  styles={buildStyles({
-                    textSize: "14px",
-                    pathColor: "#60a5fa",
-                    textColor: "#2563eb",
-                    trailColor: "#e5e7eb",
-                  })}
-                />
                 <div className={styles.userProfileSubjectLabel}>{subject}</div>
+                <div className={styles.userProfileSubjectPercent}>{percentage}%</div>
               </div>
             ))}
           </div>

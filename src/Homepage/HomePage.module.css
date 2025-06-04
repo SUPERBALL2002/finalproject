@@ -423,3 +423,50 @@
         height: 80px;
     }
 }
+
+.profileSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.profileIcon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid var(--accent);
+    background: #fff url('circle-user-regular.svg') center/cover no-repeat;
+    box-shadow: 0 2px 8px 0 rgba(255,183,77,0.10);
+    transition: box-shadow 0.18s, border-color 0.18s;
+}
+
+.profileIcon:hover {
+    box-shadow: 0 4px 16px 0 rgba(255,183,77,0.18);
+    border-color: #2563eb;
+}
+
+/* ตัวอย่างปุ่มเปลี่ยนรูป (ถ้าต้องการให้ผู้ใช้เปลี่ยน avatar) */
+.profileAvatarUploadBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 1px 4px 0 rgba(60,60,60,0.08);
+    transition: background 0.18s;
+}
+.profileAvatarUploadBtn:hover {
+    background: #2563eb;
+}

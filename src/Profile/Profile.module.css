@@ -153,23 +153,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  position: relative;
 }
 
 .userProfileAvatar {
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2.5px solid var(--main-accent);
-  background: #f3f4f6;
+  border: 3px solid var(--main-accent);
+  background: #f3f4f6 url('circle-user-regular.svg') center/cover no-repeat;
   margin-bottom: 8px;
+  box-shadow: 0 2px 12px 0 rgba(37,99,235,0.08);
+  transition: box-shadow 0.18s;
+}
+.userProfileAvatar:hover {
+  box-shadow: 0 4px 24px 0 rgba(37,99,235,0.16);
 }
 
-.userProfileProgressCircle {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto;
+/* เพิ่มปุ่มเปลี่ยนรูป (ถ้าต้องการ) */
+.userProfileAvatarUploadBtn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: var(--main-accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.08);
+  transition: background 0.18s;
+}
+.userProfileAvatarUploadBtn:hover {
+  background: var(--main-accent-dark);
 }
 
 .userProfileInfo {
